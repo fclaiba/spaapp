@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f7f3ee;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1ebe4;
+  --color-surface-strong: #111111;
+  --color-primary: #111111;
+  --color-accent: #8f5e38;
+  --color-accent-soft: #dbc4a6;
+  --color-success: #2f7d59;
+  --color-danger: #c2514b;
+  --color-warning: #a36a0a;
+  --color-text-primary: #111111;
+  --color-text-secondary: #4d4d4d;
+  --color-text-tertiary: #6f6f6f;
+  --color-border-subtle: rgba(17, 17, 17, 0.08);
+  --color-border-medium: rgba(17, 17, 17, 0.14);
+  --color-focus: rgba(143, 94, 56, 0.28);
+
+  /* Legacy aliases kept to avoid breaking existing utility usage while refactoring. */
+  --color-obsidian: #111111;
+  --color-champagne: #8f5e38;
+  --color-ivory: #f7f3ee;
+  --color-blush: #dbc4a6;
+  --color-smoke: #ebe4dc;
+
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "Jost", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
+    --card: var(--color-surface);
+    --card-foreground: var(--color-text-primary);
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text-primary);
+    --primary: var(--color-primary);
+    --primary-foreground: #ffffff;
+    --secondary: var(--color-surface-subtle);
+    --secondary-foreground: var(--color-text-primary);
+    --muted: var(--color-surface-subtle);
+    --muted-foreground: var(--color-text-secondary);
+    --accent: var(--color-accent);
+    --accent-foreground: #ffffff;
+    --destructive: var(--color-danger);
+    --destructive-foreground: #ffffff;
+    --border: var(--color-border-subtle);
+    --input: var(--color-border-medium);
+    --ring: var(--color-focus);
+    --radius: 1rem;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: radial-gradient(circle at top, #fffdfb 0%, var(--color-background) 52%, #efe6db 100%);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.015em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--color-text-primary);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .ux-page {
+    @apply min-h-screen text-[var(--color-text-primary)];
+  }
+
+  .ux-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .ux-section {
+    @apply py-16 lg:py-24;
+  }
+
+  .ux-card {
+    @apply rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] shadow-[0_20px_60px_rgba(17,17,17,0.06)];
+  }
+
+  .ux-panel {
+    @apply rounded-[28px] border border-[var(--color-border-subtle)] bg-[rgba(255,255,255,0.84)] backdrop-blur-md shadow-[0_12px_40px_rgba(17,17,17,0.05)];
+  }
+
+  .ux-interactive {
+    @apply transition-all duration-200 outline-none;
+  }
+
+  .ux-interactive:focus-visible {
+    @apply ring-4 ring-[var(--color-focus)];
+  }
+
+  .ux-h1 {
+    @apply text-4xl font-semibold leading-none tracking-tight sm:text-5xl lg:text-6xl;
+  }
+
+  .ux-h2 {
+    @apply text-3xl font-semibold leading-tight tracking-tight lg:text-4xl;
+  }
+
+  .ux-h3 {
+    @apply text-xl font-semibold leading-snug;
+  }
+
+  .ux-overline {
+    @apply text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-accent)];
+  }
+
+  .ux-body {
+    @apply text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base;
+  }
+
+  .ux-caption {
+    @apply text-xs leading-5 text-[var(--color-text-tertiary)];
+  }
+
+  .ux-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(17,17,17,0.16)] transition-all duration-200 outline-none hover:-translate-y-px hover:bg-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+  }
+
+  .ux-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border-medium)] bg-white px-5 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition-all duration-200 outline-none hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+  }
+
+  .ux-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-all duration-200 outline-none hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+  }
+
+  .ux-input {
+    @apply w-full rounded-2xl border border-[var(--color-border-medium)] bg-white px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-4 focus:ring-[var(--color-focus)];
+  }
+
+  .ux-badge {
+    @apply inline-flex items-center rounded-full bg-[var(--color-surface-subtle)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)];
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(17, 17, 17, 0.16);
+    border-radius: 999px;
+  }
+
+  .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(143, 94, 56, 0.44);
+  }
+}
