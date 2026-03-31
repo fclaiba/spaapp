@@ -29,7 +29,7 @@ export function ServicesGridSection() {
           </Link>
         </div>
 
-        <div className="mb-6 flex flex-wrap gap-3">
+        <div className="mb-6 flex flex-wrap gap-2 rounded-[24px] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-2">
           {serviceCategories.map((category) => {
             const isActive = category.id === selectedCategory;
             return (
@@ -37,10 +37,10 @@ export function ServicesGridSection() {
                 key={category.id}
                 type="button"
                 onClick={() => setSelectedCategory(category.id)}
-                className={`ux-interactive rounded-full px-4 py-2 text-sm font-semibold ${
+                className={`ux-interactive rounded-full border border-transparent px-4 py-3 text-[12px] uppercase tracking-[0.12em] ${
                   isActive
-                    ? "bg-[var(--color-primary)] text-white"
-                    : "border border-[var(--color-border-medium)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                    ? "border-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)] font-semibold"
+                    : "text-[var(--color-text-tertiary)] hover:text-[var(--color-accent)]"
                 }`}
               >
                 {category.label}
@@ -49,7 +49,7 @@ export function ServicesGridSection() {
           })}
         </div>
 
-        <div className="mb-8 rounded-[28px] border border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] p-5">
+        <div className="mb-8 rounded-[24px] border border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] p-5">
           <p className="text-sm text-[var(--color-text-secondary)]">
             {serviceCategories.find((category) => category.id === selectedCategory)?.description}
           </p>
@@ -63,21 +63,21 @@ export function ServicesGridSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}
               transition={{ duration: 0.35, delay: index * 0.05 }}
-              className="ux-card overflow-hidden p-6"
+              className="ux-card overflow-hidden rounded-[28px] p-6"
             >
               <div className="flex flex-col gap-6">
-                <div className="rounded-[28px] bg-[linear-gradient(135deg,#fff_0%,#f4ede5_60%,#e7d3bb_100%)] p-5">
+                <div className="rounded-[24px] border border-[var(--color-border-subtle)] bg-[linear-gradient(135deg,#fdfaf7_0%,#faf2ec_100%)] p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="ux-badge">{serviceCategories.find((item) => item.id === service.categoryId)?.label}</span>
                         {service.badge ? (
-                          <span className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
+                          <span className="border border-[var(--color-border-medium)] bg-[var(--color-accent-soft)] px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
                             {service.badge}
                           </span>
                         ) : null}
                       </div>
-                      <h3 className="mt-4 text-2xl font-semibold text-[var(--color-text-primary)]">
+                      <h3 className="mt-4 font-[var(--font-display)] text-[30px] font-medium leading-tight text-[var(--color-text-primary)]">
                         {service.name}
                       </h3>
                       <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{service.summary}</p>
@@ -86,14 +86,14 @@ export function ServicesGridSection() {
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-3xl border border-[var(--color-border-subtle)] p-4">
+                  <div className="rounded-[20px] border border-[var(--color-border-subtle)] p-4">
                     <p className="ux-caption uppercase">Duracion</p>
                     <p className="mt-2 flex items-center gap-2 text-lg font-semibold">
                       <Clock3 size={18} className="text-[var(--color-accent)]" />
                       {service.duration} min
                     </p>
                   </div>
-                  <div className="rounded-3xl border border-[var(--color-border-subtle)] p-4">
+                  <div className="rounded-[20px] border border-[var(--color-border-subtle)] p-4">
                     <p className="ux-caption uppercase">Precio</p>
                     <p className="mt-2 flex items-center gap-2 text-lg font-semibold">
                       <WalletCards size={18} className="text-[var(--color-accent)]" />
@@ -108,7 +108,7 @@ export function ServicesGridSection() {
                     {service.outcomes.map((outcome) => (
                       <li
                         key={outcome}
-                        className="rounded-2xl bg-[var(--color-surface-subtle)] px-4 py-3 text-sm text-[var(--color-text-secondary)]"
+                        className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] px-4 py-3 text-sm text-[var(--color-text-secondary)]"
                       >
                         {outcome}
                       </li>

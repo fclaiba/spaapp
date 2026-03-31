@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router";
-import { CalendarDays, LayoutDashboard, Menu, Settings, ShieldCheck, Users } from "lucide-react";
+import { CalendarDays, LayoutDashboard, LogOut, Menu, Settings, ShieldCheck, Users } from "lucide-react";
 import { Toaster } from "../components/ui/sonner";
+import { useAuthActions } from "@convex-dev/auth/react";
+
+const DEV_BYPASS_KEY = "medallo_dev_mode";
 
 export function AdminLayout() {
   const location = useLocation();
+  const { signOut } = useAuthActions();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -39,11 +43,11 @@ export function AdminLayout() {
           >
             <div className="flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-5">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)] font-semibold text-white">
-                AW
+                MS
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-text-primary)]">
-                  Aman Admin
+                  Medallo Admin
                 </p>
                 <p className="ux-caption">Operacion y seguimiento</p>
               </div>
@@ -77,6 +81,17 @@ export function AdminLayout() {
               <Link to="/" className="ux-btn-secondary w-full justify-center">
                 Volver al sitio
               </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  window.localStorage.removeItem(DEV_BYPASS_KEY);
+                  void signOut();
+                }}
+                className="ux-btn-ghost w-full justify-center gap-2"
+              >
+                <LogOut size={15} />
+                Cerrar sesión
+              </button>
             </div>
           </aside>
 
@@ -105,8 +120,8 @@ export function AdminLayout() {
 
               <div className="flex items-center gap-3 self-end sm:self-auto">
                 <div className="text-right">
-                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Isabella Rossi</p>
-                  <p className="ux-caption">Administracion general</p>
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Medallo Spa Team</p>
+                  <p className="ux-caption">Administracion y operaciones</p>
                 </div>
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-subtle)] text-[var(--color-primary)]">
                   <ShieldCheck size={18} />

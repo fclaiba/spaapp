@@ -23,44 +23,40 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6">
+      <header className="sticky top-0 z-50 border-b border-[var(--color-border-subtle)] bg-[var(--color-background)] px-3 pt-4 sm:px-6">
         <div
-          className={`ux-shell flex items-center justify-between rounded-full border px-4 py-3 transition-all sm:px-6 ${
+          className={`ux-shell flex items-center justify-between border-b px-4 pb-4 transition-all sm:px-6 ${
             isScrolled
-              ? "border-[var(--color-border-medium)] bg-[rgba(255,255,255,0.92)] shadow-[0_12px_32px_rgba(17,17,17,0.08)] backdrop-blur-md"
-              : "border-transparent bg-transparent"
+              ? "border-[var(--color-border-medium)]"
+              : "border-[var(--color-border-subtle)]"
           }`}
         >
-          <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-semibold text-white">
-              AW
-            </div>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-text-primary)]">
-                Aman Wellness
-              </p>
-              <p className="ux-caption">Reserva clara para tratamientos y wellness</p>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img
+              src="/logo.svg"
+              alt="Medallo Spa"
+              className="h-16 w-auto sm:h-20 object-contain"
+            />
           </Link>
 
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-2 lg:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="ux-btn-ghost px-0 py-0 text-sm text-[var(--color-text-secondary)] hover:bg-transparent"
+                className="ux-btn-ghost border-b-2 border-transparent px-3 py-3 text-[12px] tracking-[0.12em] hover:border-[var(--color-accent)] hover:bg-transparent"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             <Link to="/dashboard" className="ux-btn-ghost">
               <ShieldCheck size={16} />
               Admin
             </Link>
-            <Link to="/agendar" className="ux-btn-primary">
+            <Link to="/agendar" className="ux-btn-primary whitespace-nowrap">
               <CalendarDays size={16} />
               Reservar cita
             </Link>
@@ -68,7 +64,7 @@ export function Header() {
 
           <button
             type="button"
-            className="ux-btn-secondary px-3 py-3 lg:hidden"
+            className="ux-btn-secondary px-3 py-3.5 lg:hidden"
             onClick={() => setIsOpen((open) => !open)}
             aria-expanded={isOpen}
             aria-label="Abrir menu"
@@ -84,7 +80,7 @@ export function Header() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed inset-x-4 top-24 z-40 rounded-[28px] border border-[var(--color-border-medium)] bg-white p-5 shadow-[0_20px_60px_rgba(17,17,17,0.12)] lg:hidden"
+            className="fixed inset-x-4 top-24 z-40 rounded-[24px] border border-[var(--color-border-medium)] bg-[var(--color-surface)] p-6 shadow-[0_12px_32px_rgba(184,146,74,0.18)] lg:hidden"
           >
             <div className="space-y-2">
               {navLinks.map((link) => (
@@ -92,7 +88,7 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="flex rounded-2xl px-4 py-3 text-sm font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-surface-subtle)]"
+                  className="flex rounded-2xl px-4 py-4 text-sm font-medium text-[var(--color-text-primary)] hover:bg-[var(--color-surface-subtle)]"
                 >
                   {link.label}
                 </a>

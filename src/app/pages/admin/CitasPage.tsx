@@ -6,7 +6,7 @@ import { CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Plus, Search } f
 import { toast } from "sonner";
 
 import { services, type AppointmentStatus, type LeadSource } from "../../data/spa";
-import { addManualAppointment, updateAppointmentStatus, useSpaSnapshot } from "../../lib/spaStore";
+import { useAddManualAppointment, useUpdateAppointmentStatus, useSpaSnapshot } from "../../lib/spaStore";
 
 const statusOptions: AppointmentStatus[] = ["Pendiente", "Confirmada", "En sala", "Completada", "Cancelada"];
 const leadSources: LeadSource[] = ["Instagram", "Google", "Referido", "WhatsApp", "Walk-in"];
@@ -22,6 +22,8 @@ const isSameDay = (left: string, right: Date) => {
 
 export function CitasPage() {
   const { appointments } = useSpaSnapshot();
+  const addManualAppointment = useAddManualAppointment();
+  const updateStatus = useUpdateAppointmentStatus();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<AppointmentStatus | "Todos">("Todos");
@@ -59,24 +61,28 @@ export function CitasPage() {
     [appointments, filterStatus, searchTerm, selectedDate],
   );
 
-  const submitAppointment = () => {
+  const submitAppointment = async () => {
     if (!formState.customerName || !formState.email || !formState.phone) {
       toast.error("Completa nombre, email y telefono.");
       return;
     }
 
-    addManualAppointment(formState);
-    toast.success("Cita creada y visible en la agenda.");
-    setIsFormOpen(false);
-    setFormState({
-      customerName: "",
-      email: "",
-      phone: "",
-      serviceId: services[0]?.id ?? "",
-      date: format(new Date(), "yyyy-MM-dd"),
-      time: "10:00",
-      origin: "Instagram",
-    });
+    try {
+      await addManualAppointment(formState);
+      toast.success("Cita creada y visible en la agenda.");
+      setIsFormOpen(false);
+      setFormState({
+        customerName: "",
+        email: "",
+        phone: "",
+        serviceId: services[0]?.id ?? "",
+        date: format(new Date(), "yyyy-MM-dd"),
+        time: "10:00",
+        origin: "Instagram",
+      });
+    } catch {
+      toast.error("No se pudo crear la cita en el backend.");
+    }
   };
 
   return (
@@ -230,9 +236,13 @@ export function CitasPage() {
                 </span>
                 <select
                   value={appointment.status}
-                  onChange={(event) => {
-                    updateAppointmentStatus(appointment.id, event.target.value as AppointmentStatus);
-                    toast.success(`Estado actualizado a ${event.target.value}.`);
+                  onChange={async (event) => {
+                    try {
+                      await updateStatus(appointment.id, event.target.value as AppointmentStatus);
+                      toast.success(`Estado actualizado a ${event.target.value}.`);
+                    } catch {
+                      toast.error("No se pudo actualizar el estado.");
+                    }
                   }}
                   className="ux-input min-w-[180px]"
                 >

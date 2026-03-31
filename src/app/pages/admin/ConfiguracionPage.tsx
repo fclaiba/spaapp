@@ -4,7 +4,7 @@ import { Bell, Building2, Save, Settings2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 
 import { services } from "../../data/spa";
-import { updateSettings, useSpaSnapshot } from "../../lib/spaStore";
+import { useUpdateSettings, useSpaSnapshot } from "../../lib/spaStore";
 
 const tabs = [
   { id: "negocio", label: "Negocio", icon: Building2 },
@@ -17,6 +17,7 @@ type TabId = (typeof tabs)[number]["id"];
 
 export function ConfiguracionPage() {
   const { settings } = useSpaSnapshot();
+  const updateSettings = useUpdateSettings();
   const [activeTab, setActiveTab] = useState<TabId>("negocio");
   const [formState, setFormState] = useState(settings);
 
@@ -24,9 +25,13 @@ export function ConfiguracionPage() {
     setFormState(settings);
   }, [settings]);
 
-  const handleSave = () => {
-    updateSettings(formState);
-    toast.success("Configuracion guardada.");
+  const handleSave = async () => {
+    try {
+      await updateSettings(formState);
+      toast.success("Configuracion guardada.");
+    } catch {
+      toast.error("No se pudo guardar la configuracion.");
+    }
   };
 
   return (

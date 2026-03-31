@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  operator
+}
+
+enum LeadSource {
+  Instagram
+  Google
+  Referido
+  WhatsApp
+  WalkIn
+}
+
+enum AppointmentStatus {
+  Pendiente
+  Confirmada
+  EnSala
+  Completada
+  Cancelada
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+}
+
+model User {
+  id             String     @id @default(cuid())
+  email          String     @unique
+  passwordHash   String
+  fullName       String
+  role           Role
+  isActive       Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  auditLogs      AuditLog[]
+  appointments   Appointment[] @relation("AppointmentUpdatedBy")
+  idempotencyKey IdempotencyKey[]
+}
+
+model Service {
+  id           String        @id @default(cuid())
+  externalId   String        @unique
+  categoryId   String
+  name         String
+  summary      String
+  duration     Int
+  price        Int
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+}
+
+model Client {
+  id               String        @id @default(cuid())
+  name             String
+  email            String        @unique
+  phone            String
+  preferredService String?
+  totalVisits      Int           @default(0)
+  totalSpent       Int           @default(0)
+  origin           LeadSource
+  nextAppointment  DateTime?
+  notes            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  appointments     Appointment[]
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  serviceId       String
+  clientId        String
+  staff           String
+  startsAt        DateTime
+  duration        Int
+  price           Int
+  status          AppointmentStatus @default(Pendiente)
+  source          LeadSource
+  notes           String?
+  paymentStatus   PaymentStatus     @default(pending)
+  paymentIntentId String?           @unique
+  idempotencyKey  String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  updatedByUserId String?
+
+  service         Service           @relation(fields: [serviceId], references: [id])
+  client          Client            @relation(fields: [clientId], references: [id])
+  updatedBy       User?             @relation("AppointmentUpdatedBy", fields: [updatedByUserId], references: [id])
+
+  @@index([startsAt, staff])
+  @@index([status])
+  @@index([source])
+}
+
+model Settings {
+  id                      String   @id @default(cuid())
+  businessName            String
+  headline                String
+  phone                   String
+  email                   String
+  address                 String
+  bookingLeadTimeHours    Int      @default(4)
+  reminderEnabled         Boolean  @default(true)
+  cancellationWindowHours Int      @default(24)
+  updatedByUserId         String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  before     Json?
+  after      Json?
+  requestId  String?
+  actorId    String?
+  createdAt  DateTime @default(now())
+
+  actor      User?    @relation(fields: [actorId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+model IdempotencyKey {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  scope      String
+  response   Json
+  userId     String?
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+
+  user       User?    @relation(fields: [userId], references: [id])
+}

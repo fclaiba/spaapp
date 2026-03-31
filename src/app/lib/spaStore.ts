@@ -1,53 +1,16 @@
-import { useEffect, useState } from "react";
-
-import {
-  type AppointmentRecord,
-  type AppointmentStatus,
-  type ClientRecord,
-  type LeadSource,
-  type SettingsRecord,
-  services,
-  seedAppointments,
-  seedClients,
-  defaultSettings,
+import { useMemo } from "react";
+import { useMutation, useQuery } from "convex/react";
+import { useConvexAuth } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import type { Id } from "../../../convex/_generated/dataModel";
+import type {
+  AppointmentRecord,
+  AppointmentStatus,
+  ClientRecord,
+  LeadSource,
+  SettingsRecord,
 } from "../data/spa";
-
-const APPOINTMENTS_KEY = "spa-app-appointments";
-const CLIENTS_KEY = "spa-app-clients";
-const SETTINGS_KEY = "spa-app-settings";
-const STORE_EVENT = "spa-store-updated";
-
-export interface BookingPayload {
-  serviceId: string;
-  date: string;
-  time: string;
-  customerName: string;
-  email: string;
-  phone: string;
-  origin: LeadSource;
-  notes?: string;
-}
-
-export interface ManualAppointmentPayload {
-  serviceId: string;
-  customerName: string;
-  email: string;
-  phone: string;
-  origin: LeadSource;
-  date: string;
-  time: string;
-  status?: AppointmentStatus;
-  notes?: string;
-}
-
-export interface ClientInput {
-  name: string;
-  email: string;
-  phone: string;
-  preferredService: string;
-  origin: LeadSource;
-  notes?: string;
-}
+import { defaultSettings, seedAppointments, seedClients } from "../data/spa";
 
 export interface SpaSnapshot {
   appointments: AppointmentRecord[];
@@ -55,297 +18,211 @@ export interface SpaSnapshot {
   settings: SettingsRecord;
 }
 
-const isBrowser = () => typeof window !== "undefined";
+// ─── Hook: reactive snapshot ──────────────────────────────────────────────────
 
-const safeRead = <T,>(key: string, fallback: T): T => {
-  if (!isBrowser()) {
-    return fallback;
-  }
-
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
-const safeWrite = <T,>(key: string, value: T) => {
-  if (!isBrowser()) {
-    return;
-  }
-
-  window.localStorage.setItem(key, JSON.stringify(value));
-};
-
-const emitStoreUpdate = () => {
-  if (!isBrowser()) {
-    return;
-  }
-
-  window.dispatchEvent(new Event(STORE_EVENT));
-};
-
-const buildDateTime = (date: string, time: string) => {
-  const isoString = new Date(`${date}T${time}:00`).toISOString();
-  return isoString;
-};
-
-const getService = (serviceId: string) => {
-  const service = services.find((item) => item.id === serviceId);
-  if (!service) {
-    throw new Error(`Unknown service "${serviceId}"`);
-  }
-
-  return service;
-};
-
-const readCustomAppointments = () => safeRead<AppointmentRecord[]>(APPOINTMENTS_KEY, []);
-
-const writeCustomAppointments = (items: AppointmentRecord[]) => {
-  safeWrite(APPOINTMENTS_KEY, items);
-  emitStoreUpdate();
-};
-
-const readStoredClients = () => safeRead<ClientRecord[]>(CLIENTS_KEY, []);
-
-const writeStoredClients = (items: ClientRecord[]) => {
-  safeWrite(CLIENTS_KEY, items);
-  emitStoreUpdate();
-};
-
-const deriveClientsFromAppointments = (appointments: AppointmentRecord[]) => {
-  const map = new Map<string, ClientRecord>();
-
-  appointments.forEach((appointment) => {
-    const existing = map.get(appointment.email);
-    const nextAppointment =
-      new Date(appointment.startsAt).getTime() > Date.now()
-        ? appointment.startsAt
-        : existing?.nextAppointment;
-
-    if (existing) {
-      existing.totalVisits += 1;
-      existing.totalSpent += appointment.price;
-      existing.preferredService = appointment.serviceName;
-      existing.nextAppointment = nextAppointment;
-      if (appointment.notes) {
-        existing.notes = appointment.notes;
-      }
-      return;
-    }
-
-    map.set(appointment.email, {
-      id: `client-${appointment.id}`,
-      name: appointment.customerName,
-      email: appointment.email,
-      phone: appointment.phone,
-      preferredService: appointment.serviceName,
-      totalVisits: 1,
-      totalSpent: appointment.price,
-      origin: appointment.origin,
-      nextAppointment,
-      notes: appointment.notes,
-      createdAt: appointment.createdAt,
-    });
-  });
-
-  return Array.from(map.values());
-};
-
-export const getSettings = () =>
-  ({ ...defaultSettings, ...safeRead<Partial<SettingsRecord>>(SETTINGS_KEY, {}) }) satisfies SettingsRecord;
-
-export const getAppointments = () => {
-  const merged = new Map<string, AppointmentRecord>();
-
-  seedAppointments.forEach((appointment) => merged.set(appointment.id, appointment));
-  readCustomAppointments().forEach((appointment) => merged.set(appointment.id, appointment));
-
-  return Array.from(merged.values()).sort(
-    (left, right) => new Date(left.startsAt).getTime() - new Date(right.startsAt).getTime(),
+export function useSpaSnapshot(): SpaSnapshot {
+  const { isAuthenticated } = useConvexAuth();
+  const rawAppointments = useQuery(api.appointments.list, {});
+  const rawSettings = useQuery(api.settings.get, {});
+  const rawClients = useQuery(
+    api.clients.list,
+    isAuthenticated ? {} : "skip",
   );
-};
 
-export const getClients = () => {
-  const derived = deriveClientsFromAppointments(getAppointments());
-  const manualClients = readStoredClients();
-  const merged = new Map<string, ClientRecord>();
+  const appointments: AppointmentRecord[] = useMemo(
+    () =>
+      (rawAppointments ?? seedAppointments).map((a) => ({
+        id: a.id as string,
+        serviceId: a.serviceId,
+        serviceName: a.serviceName,
+        categoryId: a.categoryId,
+        staff: a.staff,
+        startsAt: a.startsAt,
+        duration: a.duration,
+        price: a.price,
+        status: a.status as AppointmentStatus,
+        customerName: a.customerName,
+        email: a.email,
+        phone: a.phone,
+        origin: a.origin as LeadSource,
+        notes: a.notes,
+        createdAt: a.createdAt,
+      })),
+    [rawAppointments],
+  );
 
-  [...seedClients, ...manualClients, ...derived].forEach((client) => {
-    const existing = merged.get(client.email);
-    if (!existing) {
-      merged.set(client.email, client);
-      return;
-    }
+  const clients: ClientRecord[] = useMemo(
+    () =>
+      (rawClients ?? (isAuthenticated ? [] : seedClients)).map((c) => ({
+        id: c.id as string,
+        name: c.name,
+        email: c.email,
+        phone: c.phone,
+        preferredService: c.preferredService ?? "",
+        totalVisits: c.totalVisits,
+        totalSpent: c.totalSpent,
+        origin: c.origin as LeadSource,
+        nextAppointment: c.nextAppointment,
+        notes: c.notes,
+        createdAt: c.createdAt,
+      })),
+    [rawClients, isAuthenticated],
+  );
 
-    merged.set(client.email, {
-      ...existing,
-      ...client,
-      totalVisits: Math.max(existing.totalVisits, client.totalVisits),
-      totalSpent: Math.max(existing.totalSpent, client.totalSpent),
-      nextAppointment: existing.nextAppointment ?? client.nextAppointment,
-    });
-  });
+  const settings: SettingsRecord = useMemo(
+    () => rawSettings ?? defaultSettings,
+    [rawSettings],
+  );
 
-  return Array.from(merged.values()).sort((left, right) => left.name.localeCompare(right.name));
-};
+  return useMemo(
+    () => ({ appointments, clients, settings }),
+    [appointments, clients, settings],
+  );
+}
 
-export const getSpaSnapshot = (): SpaSnapshot => ({
-  appointments: getAppointments(),
-  clients: getClients(),
-  settings: getSettings(),
-});
+// ─── Standalone hooks for write operations ────────────────────────────────────
 
-export const saveBooking = (payload: BookingPayload) => {
-  const service = getService(payload.serviceId);
-  const appointment: AppointmentRecord = {
-    id: `apt-${Date.now()}`,
-    serviceId: service.id,
-    serviceName: service.name,
-    categoryId: service.categoryId,
-    staff: service.categoryId === "laser" ? "Mateo Silva" : "Clara Vega",
-    startsAt: buildDateTime(payload.date, payload.time),
-    duration: service.duration,
-    price: service.price,
-    status: "Pendiente",
-    customerName: payload.customerName,
-    email: payload.email,
-    phone: payload.phone,
-    origin: payload.origin,
-    notes: payload.notes,
-    createdAt: new Date().toISOString(),
+export function useSaveBooking() {
+  const bookMutation = useMutation(api.appointments.book);
+
+  return async (payload: {
+    serviceId: string;
+    date: string;
+    time: string;
+    customerName: string;
+    email: string;
+    phone: string;
+    origin: LeadSource;
+    notes?: string;
+  }): Promise<AppointmentRecord> => {
+    const result = await bookMutation(payload);
+    return {
+      id: result.id as string,
+      serviceId: result.serviceId,
+      serviceName: result.serviceName,
+      categoryId: result.categoryId,
+      staff: result.staff,
+      startsAt: result.startsAt,
+      duration: result.duration,
+      price: result.price,
+      status: result.status as AppointmentStatus,
+      customerName: result.customerName,
+      email: result.email,
+      phone: result.phone,
+      origin: result.origin as LeadSource,
+      notes: result.notes,
+      createdAt: result.createdAt,
+    };
   };
+}
 
-  writeCustomAppointments([...readCustomAppointments(), appointment]);
-  return appointment;
-};
+export function useAddManualAppointment() {
+  const mutation = useMutation(api.appointments.addManual);
 
-export const addManualAppointment = (payload: ManualAppointmentPayload) => {
-  const service = getService(payload.serviceId);
-  const appointment: AppointmentRecord = {
-    id: `apt-${Date.now()}`,
-    serviceId: service.id,
-    serviceName: service.name,
-    categoryId: service.categoryId,
-    staff: service.categoryId === "laser" ? "Mateo Silva" : "Dra. Isabella Rossi",
-    startsAt: buildDateTime(payload.date, payload.time),
-    duration: service.duration,
-    price: service.price,
-    status: payload.status ?? "Confirmada",
-    customerName: payload.customerName,
-    email: payload.email,
-    phone: payload.phone,
-    origin: payload.origin,
-    notes: payload.notes,
-    createdAt: new Date().toISOString(),
+  return async (payload: {
+    serviceId: string;
+    customerName: string;
+    email: string;
+    phone: string;
+    origin: LeadSource;
+    date: string;
+    time: string;
+    status?: AppointmentStatus;
+    notes?: string;
+  }): Promise<AppointmentRecord> => {
+    const result = await mutation(payload);
+    return {
+      id: result.id as string,
+      serviceId: result.serviceId,
+      serviceName: result.serviceName,
+      categoryId: result.categoryId,
+      staff: result.staff,
+      startsAt: result.startsAt,
+      duration: result.duration,
+      price: result.price,
+      status: result.status as AppointmentStatus,
+      customerName: result.customerName,
+      email: result.email,
+      phone: result.phone,
+      origin: result.origin as LeadSource,
+      notes: result.notes,
+      createdAt: result.createdAt,
+    };
   };
+}
 
-  writeCustomAppointments([...readCustomAppointments(), appointment]);
-  return appointment;
-};
+export function useUpdateAppointmentStatus() {
+  const mutation = useMutation(api.appointments.updateStatus);
 
-export const updateAppointmentStatus = (appointmentId: string, status: AppointmentStatus) => {
-  const customAppointments = readCustomAppointments();
-  const existingCustom = customAppointments.find((appointment) => appointment.id === appointmentId);
-
-  if (existingCustom) {
-    writeCustomAppointments(
-      customAppointments.map((appointment) =>
-        appointment.id === appointmentId ? { ...appointment, status } : appointment,
-      ),
-    );
-    return;
-  }
-
-  const seedAppointment = seedAppointments.find((appointment) => appointment.id === appointmentId);
-  if (!seedAppointment) {
-    return;
-  }
-
-  writeCustomAppointments([...customAppointments, { ...seedAppointment, status }]);
-};
-
-export const addClient = (payload: ClientInput) => {
-  const clients = readStoredClients();
-  const client: ClientRecord = {
-    id: `client-${Date.now()}`,
-    name: payload.name,
-    email: payload.email,
-    phone: payload.phone,
-    preferredService: payload.preferredService,
-    totalVisits: 0,
-    totalSpent: 0,
-    origin: payload.origin,
-    notes: payload.notes,
-    createdAt: new Date().toISOString(),
+  return async (appointmentId: string, status: AppointmentStatus): Promise<void> => {
+    await mutation({ id: appointmentId as Id<"appointments">, status });
   };
+}
 
-  writeStoredClients([...clients, client]);
-  return client;
-};
+export function useAddClient() {
+  const mutation = useMutation(api.clients.add);
 
-export const updateSettings = (payload: Partial<SettingsRecord>) => {
-  safeWrite(SETTINGS_KEY, { ...getSettings(), ...payload });
-  emitStoreUpdate();
-};
+  return async (payload: {
+    name: string;
+    email: string;
+    phone: string;
+    preferredService?: string;
+    origin: LeadSource;
+    notes?: string;
+  }): Promise<ClientRecord> => {
+    const result = await mutation(payload);
+    return {
+      id: result.id as string,
+      name: result.name,
+      email: result.email,
+      phone: result.phone,
+      preferredService: result.preferredService ?? "",
+      totalVisits: result.totalVisits,
+      totalSpent: result.totalSpent,
+      origin: result.origin as LeadSource,
+      nextAppointment: result.nextAppointment,
+      notes: result.notes,
+      createdAt: result.createdAt,
+    };
+  };
+}
 
-export const getWeeklyOverview = () => {
+export function useUpdateSettings() {
+  const mutation = useMutation(api.settings.update);
+  return mutation;
+}
+
+// ─── Analytics helpers (pure, based on cached appointments) ──────────────────
+
+export function getWeeklyOverview(appointments: AppointmentRecord[]) {
   const weeks = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
   return weeks.map((label, index) => {
-    const appointments = getAppointments().filter((appointment) => {
+    const filtered = appointments.filter((a) => {
       const start = new Date();
       start.setDate(start.getDate() - 28 + index * 7);
       start.setHours(0, 0, 0, 0);
-
       const end = new Date(start);
       end.setDate(start.getDate() + 7);
-
-      const current = new Date(appointment.startsAt);
+      const current = new Date(a.startsAt);
       return current >= start && current < end;
     });
-
     return {
       name: label,
-      citas: appointments.length,
-      ingresos: appointments.reduce((sum, appointment) => sum + appointment.price, 0),
+      citas: filtered.length,
+      ingresos: filtered.reduce((sum, a) => sum + a.price, 0),
     };
   });
-};
+}
 
-export const getSourceDistribution = () => {
+export function getSourceDistribution(appointments: AppointmentRecord[]) {
   const totals = new Map<LeadSource, number>();
-  getAppointments().forEach((appointment) => {
-    totals.set(appointment.origin, (totals.get(appointment.origin) ?? 0) + 1);
+  appointments.forEach((a) => {
+    totals.set(a.origin, (totals.get(a.origin) ?? 0) + 1);
   });
-
-  const totalAppointments = Array.from(totals.values()).reduce((sum, value) => sum + value, 0) || 1;
-
+  const total = Array.from(totals.values()).reduce((sum, v) => sum + v, 0) || 1;
   return Array.from(totals.entries()).map(([name, value], index) => ({
     name,
-    value: Math.round((value / totalAppointments) * 100),
+    value: Math.round((value / total) * 100),
     color: ["#111111", "#825b39", "#c28d58", "#d8c0a5", "#8aa08a"][index % 5],
   }));
-};
-
-export const useSpaSnapshot = () => {
-  const [snapshot, setSnapshot] = useState<SpaSnapshot>(getSpaSnapshot());
-
-  useEffect(() => {
-    if (!isBrowser()) {
-      return undefined;
-    }
-
-    const handleUpdate = () => setSnapshot(getSpaSnapshot());
-
-    window.addEventListener("storage", handleUpdate);
-    window.addEventListener(STORE_EVENT, handleUpdate);
-
-    return () => {
-      window.removeEventListener("storage", handleUpdate);
-      window.removeEventListener(STORE_EVENT, handleUpdate);
-    };
-  }, []);
-
-  return snapshot;
-};
+}

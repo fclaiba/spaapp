@@ -1,32 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f7f3ee;
-  --color-surface: #ffffff;
-  --color-surface-subtle: #f1ebe4;
-  --color-surface-strong: #111111;
-  --color-primary: #111111;
-  --color-accent: #8f5e38;
-  --color-accent-soft: #dbc4a6;
-  --color-success: #2f7d59;
-  --color-danger: #c2514b;
-  --color-warning: #a36a0a;
-  --color-text-primary: #111111;
-  --color-text-secondary: #4d4d4d;
-  --color-text-tertiary: #6f6f6f;
-  --color-border-subtle: rgba(17, 17, 17, 0.08);
-  --color-border-medium: rgba(17, 17, 17, 0.14);
-  --color-focus: rgba(143, 94, 56, 0.28);
+  --color-background: #faf2ec;
+  --color-surface: #fdfaf7;
+  --color-surface-subtle: #f2e4d8;
+  --color-surface-strong: #e8d3c3;
+  --color-primary: #b8924a;
+  --color-accent: #c8a96e;
+  --color-accent-soft: #f0e0c0;
+  --color-success: #8aa078;
+  --color-danger: #b86961;
+  --color-warning: #b8924a;
+  --color-text-primary: #3a2e28;
+  --color-text-secondary: #5f4a3f;
+  --color-text-tertiary: #9b8478;
+  --color-border-subtle: rgba(184, 146, 74, 0.2);
+  --color-border-medium: rgba(184, 146, 74, 0.36);
+  --color-focus: rgba(200, 169, 110, 0.35);
 
   /* Legacy aliases kept to avoid breaking existing utility usage while refactoring. */
-  --color-obsidian: #111111;
-  --color-champagne: #8f5e38;
-  --color-ivory: #f7f3ee;
-  --color-blush: #dbc4a6;
-  --color-smoke: #ebe4dc;
+  --color-obsidian: #3a2e28;
+  --color-champagne: #b8924a;
+  --color-ivory: #fdfaf7;
+  --color-blush: #f2e4d8;
+  --color-smoke: #e8d3c3;
 
   --font-display: "Cormorant Garamond", serif;
-  --font-body: "Jost", sans-serif;
+  --font-body: "Josefin Sans", sans-serif;
 }
 
 @layer base {
@@ -62,11 +62,11 @@
   }
 
   body {
-    background: radial-gradient(circle at top, #fffdfb 0%, var(--color-background) 52%, #efe6db 100%);
+    background: var(--color-background);
     color: var(--foreground);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.002em;
   }
 
   h1,
@@ -93,15 +93,15 @@
   }
 
   .ux-shell {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
   .ux-section {
-    @apply py-16 lg:py-24;
+    @apply py-8 sm:py-12 lg:py-16;
   }
 
   .ux-card {
-    @apply rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] shadow-[0_20px_60px_rgba(17,17,17,0.06)];
+    @apply rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] shadow-[0_2px_12px_rgba(184,146,74,0.10)];
   }
 
   .ux-panel {
@@ -117,47 +117,47 @@
   }
 
   .ux-h1 {
-    @apply text-4xl font-semibold leading-none tracking-tight sm:text-5xl lg:text-6xl;
+    @apply text-4xl font-normal leading-[1.15] tracking-[0.016em] sm:text-5xl lg:text-6xl;
   }
 
   .ux-h2 {
-    @apply text-3xl font-semibold leading-tight tracking-tight lg:text-4xl;
+    @apply text-[1.9rem] font-medium leading-[1.15] tracking-[0.016em] sm:text-3xl lg:text-4xl;
   }
 
   .ux-h3 {
-    @apply text-xl font-semibold leading-snug;
+    @apply text-xl font-medium leading-snug;
   }
 
   .ux-overline {
-    @apply text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-accent)];
+    @apply text-[11px] font-semibold uppercase tracking-[0.26em] text-[var(--color-accent)];
   }
 
   .ux-body {
-    @apply text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base;
+    @apply text-[14px] leading-[1.65] text-[var(--color-text-secondary)] sm:text-[15px];
   }
 
   .ux-caption {
-    @apply text-xs leading-5 text-[var(--color-text-tertiary)];
+    @apply text-[11px] leading-5 text-[var(--color-text-tertiary)];
   }
 
   .ux-btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(17,17,17,0.16)] transition-all duration-200 outline-none hover:-translate-y-px hover:bg-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--color-surface)] transition-all duration-200 outline-none hover:bg-[#d4b06a] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
   }
 
   .ux-btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border-medium)] bg-white px-5 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition-all duration-200 outline-none hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border-medium)] bg-[var(--color-surface)] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)] transition-all duration-200 outline-none hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
   }
 
   .ux-btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-all duration-200 outline-none hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-text-tertiary)] transition-all duration-200 outline-none hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-accent)] focus-visible:ring-4 focus-visible:ring-[var(--color-focus)];
   }
 
   .ux-input {
-    @apply w-full rounded-2xl border border-[var(--color-border-medium)] bg-white px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-4 focus:ring-[var(--color-focus)];
+    @apply w-full border border-[var(--color-border-medium)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-4 focus:ring-[var(--color-focus)];
   }
 
   .ux-badge {
-    @apply inline-flex items-center rounded-full bg-[var(--color-surface-subtle)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)];
+    @apply inline-flex items-center bg-[var(--color-accent-soft)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)] border border-[var(--color-border-subtle)];
   }
 }
 

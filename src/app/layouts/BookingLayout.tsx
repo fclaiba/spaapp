@@ -8,9 +8,9 @@ export function BookingLayout() {
         <div className="ux-shell flex items-center justify-between rounded-full border border-[var(--color-border-subtle)] bg-[rgba(255,255,255,0.88)] px-4 py-3 shadow-[0_12px_32px_rgba(17,17,17,0.06)] backdrop-blur-md sm:px-6">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-text-primary)]">
-              Aman Wellness
+              MEDALLO SPA
             </p>
-            <p className="ux-caption">Reserva guiada en tres pasos</p>
+            <p className="ux-caption">Aesthetics & IV Vitamins</p>
           </div>
           <Link to="/" className="ux-btn-secondary">
             <ArrowLeft size={16} />

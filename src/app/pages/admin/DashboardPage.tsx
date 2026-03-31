@@ -15,6 +15,8 @@ const isCurrentMonth = (isoDate: string) => {
 
 export function DashboardPage() {
   const { appointments, clients } = useSpaSnapshot();
+  const weeklyOverview = getWeeklyOverview(appointments);
+  const sourceDistribution = getSourceDistribution(appointments);
 
   const monthlyAppointments = appointments.filter((appointment) => isCurrentMonth(appointment.startsAt));
   const monthlyRevenue = monthlyAppointments.reduce((sum, appointment) => sum + appointment.price, 0);
@@ -71,8 +73,8 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
-        <RevenueChart data={getWeeklyOverview()} delay={0.25} />
-        <SourceChart data={getSourceDistribution()} delay={0.3} />
+        <RevenueChart data={weeklyOverview} delay={0.25} />
+        <SourceChart data={sourceDistribution} delay={0.3} />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">

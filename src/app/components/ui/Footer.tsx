@@ -1,16 +1,23 @@
 import { CalendarDays, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router";
 import { useSpaSnapshot } from "../../lib/spaStore";
+import { socialProfiles } from "../../data/spa";
 
 export function Footer() {
   const { settings } = useSpaSnapshot();
 
   return (
-    <footer className="ux-section pb-10 pt-8">
+    <footer className="ux-section border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)] pb-8 pt-8">
       <div className="ux-shell">
         <div className="ux-card grid gap-8 p-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:p-10">
           <div className="space-y-4">
-            <span className="ux-overline">Reserva sin friccion</span>
+            <Link to="/">
+              <img
+                src="/logo.svg"
+                alt="Medallo Spa"
+                className="h-20 w-auto object-contain"
+              />
+            </Link>
             <h2 className="ux-h2 max-w-lg">
               La experiencia empieza antes del tratamiento: claridad, confianza y siguiente paso obvio.
             </h2>
@@ -43,6 +50,14 @@ export function Footer() {
                 <Mail size={16} className="text-[var(--color-accent)]" />
                 <span>{settings.email}</span>
               </p>
+              <p className="flex items-center gap-3">
+                <span className="text-[var(--color-accent)]">IG</span>
+                <span>{socialProfiles.instagram}</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <span className="text-[var(--color-accent)]">TT</span>
+                <span>{socialProfiles.tiktok}</span>
+              </p>
             </div>
           </div>
 
@@ -62,7 +77,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 px-2 text-xs text-[var(--color-text-tertiary)] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-3 border-t border-[var(--color-border-subtle)] px-2 pt-5 text-[11px] text-[var(--color-text-tertiary)] sm:flex-row sm:items-center sm:justify-between">
           <p>{settings.businessName} © {new Date().getFullYear()}.</p>
           <p>Diseñado para que cada pantalla tenga una accion clara y verificable.</p>
         </div>

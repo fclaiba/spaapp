@@ -4,12 +4,13 @@ import { Mail, Phone, Plus, Search, Users } from "lucide-react";
 import { toast } from "sonner";
 
 import { type LeadSource } from "../../data/spa";
-import { addClient, useSpaSnapshot } from "../../lib/spaStore";
+import { useAddClient, useSpaSnapshot } from "../../lib/spaStore";
 
 const leadSources: LeadSource[] = ["Instagram", "Google", "Referido", "WhatsApp", "Walk-in"];
 
 export function ClientesPage() {
   const { clients, appointments } = useSpaSnapshot();
+  const addClient = useAddClient();
   const [searchTerm, setSearchTerm] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formState, setFormState] = useState({
@@ -38,23 +39,27 @@ export function ClientesPage() {
     [clients, searchTerm],
   );
 
-  const submitClient = () => {
+  const submitClient = async () => {
     if (!formState.name || !formState.email || !formState.phone) {
       toast.error("Completa nombre, email y telefono.");
       return;
     }
 
-    addClient(formState);
-    toast.success("Cliente agregado al directorio.");
-    setIsFormOpen(false);
-    setFormState({
-      name: "",
-      email: "",
-      phone: "",
-      preferredService: "Evaluacion inicial",
-      origin: "Instagram",
-      notes: "",
-    });
+    try {
+      await addClient(formState);
+      toast.success("Cliente agregado al directorio.");
+      setIsFormOpen(false);
+      setFormState({
+        name: "",
+        email: "",
+        phone: "",
+        preferredService: "Evaluacion inicial",
+        origin: "Instagram",
+        notes: "",
+      });
+    } catch {
+      toast.error("No se pudo crear el cliente en el backend.");
+    }
   };
 
   return (
