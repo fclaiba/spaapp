@@ -11,7 +11,7 @@ export const seedSettings = internalMutation({
       headline: "Tu bienestar, nuestra prioridad.",
       phone: "+57 300 000 0000",
       email: "info@medallospa.com",
-      address: "Medellín, Colombia",
+      address: "Nueva York, Estados Unidos",
       bookingLeadTimeHours: 4,
       reminderEnabled: true,
       cancellationWindowHours: 24,
