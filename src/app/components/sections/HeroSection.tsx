@@ -11,7 +11,7 @@ export function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover object-center"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#fff7ee]/86 via-[#fff7ee]/62 to-[#fff7ee]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F9F4EE]/86 via-[#F9F4EE]/62 to-[#F9F4EE]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
         <motion.div
@@ -27,7 +27,7 @@ export function HeroSection() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             Belleza que{" "}
-            <em className="text-glow text-[var(--color-primary)]">
+            <em className="text-[var(--color-text-primary)]">
               transforma
             </em>
           </h1>

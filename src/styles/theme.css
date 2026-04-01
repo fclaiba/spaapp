@@ -5,9 +5,9 @@
   --color-surface-strong: #E5DDD4;
   --color-surface-lowest: #FBF8F4;
 
-  --color-primary: #ac9295;
-  --color-accent: #c9b6b9;
-  --color-accent-soft: rgba(172, 146, 149, 0.14);
+  --color-primary: #D9C5B2;
+  --color-accent: #C9B5A2;
+  --color-accent-soft: rgba(217, 197, 178, 0.18);
 
   --color-success: #3d7a4a;
   --color-danger: #b03030;
@@ -19,9 +19,9 @@
 
   --color-border-subtle: rgba(142, 115, 91, 0.14);
   --color-border-medium: rgba(142, 115, 91, 0.24);
-  --color-focus: rgba(172, 146, 149, 0.30);
+  --color-focus: rgba(217, 197, 178, 0.40);
 
-  --color-primary-foreground: #FFFFFF;
+  --color-primary-foreground: #4A3228;
   --color-nav-muted: #8E735B;
 
   --font-display: "Cormorant Garamond", serif;
@@ -109,22 +109,22 @@
   }
 
   .ux-h1 {
-    @apply text-5xl font-light leading-none tracking-tighter sm:text-7xl lg:text-9xl;
+    @apply text-5xl font-semibold leading-none tracking-tight sm:text-7xl lg:text-9xl;
     font-family: var(--font-display);
   }
 
   .ux-h2 {
-    @apply text-4xl font-light leading-tight tracking-tight sm:text-5xl lg:text-7xl;
+    @apply text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-7xl;
     font-family: var(--font-display);
   }
 
   .ux-h3 {
-    @apply text-2xl font-normal leading-snug;
+    @apply text-2xl font-semibold leading-snug;
     font-family: var(--font-display);
   }
 
   .ux-overline {
-    @apply text-[10px] font-semibold uppercase tracking-[0.4em] text-[var(--color-primary)];
+    @apply text-[10px] font-semibold uppercase tracking-[0.4em] text-[var(--color-text-secondary)];
     font-family: var(--font-body);
   }
 
@@ -184,7 +184,7 @@
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 24px rgba(172, 146, 149, 0.30);
+    text-shadow: 0 0 24px rgba(217, 197, 178, 0.40);
   }
 
   .grain-overlay {
