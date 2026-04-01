@@ -13,7 +13,7 @@ export function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover object-center"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-background)]/40 via-[var(--color-background)]/20 to-[var(--color-background)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/20 to-[var(--color-background)]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
         <motion.div
@@ -65,7 +65,7 @@ export function HeroSection() {
         transition={{ delay: 1.2, duration: 1 }}
         className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-tertiary)]">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">
           Scroll
         </span>
         <div className="h-12 w-px bg-gradient-to-b from-[var(--color-primary)] to-transparent" />

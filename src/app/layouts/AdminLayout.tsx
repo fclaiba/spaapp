@@ -29,7 +29,7 @@ export function AdminLayout() {
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
           onClick={closeMobileMenu}
         />
       )}
@@ -37,29 +37,16 @@ export function AdminLayout() {
       <div className="px-4 py-4 sm:px-6">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
           <aside
-            className={`fixed inset-y-4 left-4 z-50 flex w-[260px] flex-col rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.4)] transition-transform lg:static lg:translate-x-0 ${
+            className={`fixed inset-y-4 left-4 z-50 flex w-[260px] flex-col rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-transform lg:static lg:translate-x-0 ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-[120%]"
             }`}
           >
             <div className="flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-5">
-              <div
-                className="flex h-12 w-12 items-center justify-center rounded-full font-semibold"
-                style={{
-                  background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
-                  color: "var(--color-primary-foreground)",
-                }}
-              >
-                MS
-              </div>
-              <div>
-                <p
-                  className="text-sm font-semibold tracking-[0.15em] text-[var(--color-primary)]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Medallo Admin
-                </p>
-                <p className="ux-caption">Operación y seguimiento</p>
-              </div>
+              <img
+                src="/logo.svg"
+                alt="Medallo Spa"
+                className="h-10 w-auto mix-blend-multiply"
+              />
             </div>
 
             <nav className="flex-1 space-y-1 py-6">

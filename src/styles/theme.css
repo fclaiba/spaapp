@@ -1,28 +1,28 @@
 @theme {
-  --color-background: #131313;
-  --color-surface: #1c1b1b;
-  --color-surface-subtle: #201f1f;
-  --color-surface-strong: #2a2a2a;
-  --color-surface-lowest: #0e0e0e;
+  --color-background: #FAFAF7;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F3F2EE;
+  --color-surface-strong: #EAE8E3;
+  --color-surface-lowest: #F7F6F3;
 
-  --color-primary: #d4af37;
-  --color-accent: #f2ca50;
-  --color-accent-soft: rgba(212, 175, 55, 0.12);
+  --color-primary: #B8960C;
+  --color-accent: #D4AF37;
+  --color-accent-soft: rgba(184, 150, 12, 0.08);
 
-  --color-success: #8aa078;
-  --color-danger: #ffb4ab;
-  --color-warning: #f4be53;
+  --color-success: #3d7a4a;
+  --color-danger: #c4314b;
+  --color-warning: #b8860b;
 
-  --color-text-primary: #e5e2e1;
-  --color-text-secondary: #d0c5af;
-  --color-text-tertiary: #99907c;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #5C5C5C;
+  --color-text-tertiary: #8A8A8A;
 
-  --color-border-subtle: rgba(77, 70, 53, 0.35);
-  --color-border-medium: rgba(77, 70, 53, 0.6);
-  --color-focus: rgba(212, 175, 55, 0.35);
+  --color-border-subtle: rgba(0, 0, 0, 0.07);
+  --color-border-medium: rgba(0, 0, 0, 0.14);
+  --color-focus: rgba(184, 150, 12, 0.25);
 
-  --color-primary-foreground: #554300;
-  --color-nav-muted: #4D4635;
+  --color-primary-foreground: #FFFFFF;
+  --color-nav-muted: #999999;
 
   --font-display: "Cormorant Garamond", serif;
   --font-headline: "Noto Serif", serif;
@@ -46,7 +46,7 @@
     --accent: var(--color-accent);
     --accent-foreground: var(--color-primary-foreground);
     --destructive: var(--color-danger);
-    --destructive-foreground: #690005;
+    --destructive-foreground: #FFFFFF;
     --border: var(--color-border-subtle);
     --input: var(--color-border-medium);
     --ring: var(--color-focus);
@@ -93,11 +93,11 @@
   }
 
   .ux-card {
-    @apply rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface)] shadow-[0_2px_12px_rgba(0,0,0,0.3)];
+    @apply rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-surface)] shadow-[0_1px_4px_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.04)];
   }
 
   .ux-panel {
-    @apply rounded-xl border border-[var(--color-border-subtle)] bg-[rgba(28,27,27,0.84)] backdrop-blur-md shadow-[0_12px_40px_rgba(0,0,0,0.2)];
+    @apply rounded-xl border border-[var(--color-border-subtle)] bg-white/90 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.06)];
   }
 
   .ux-interactive {
@@ -139,17 +139,17 @@
   }
 
   .ux-btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-lg tracking-tight transition-all duration-300 outline-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-lg font-semibold tracking-tight transition-all duration-300 outline-none;
     font-family: var(--font-display);
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
     background-size: 200% 200%;
     color: var(--color-primary-foreground);
-    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 20px rgba(184, 150, 12, 0.25);
   }
 
   .ux-btn-primary:hover {
     @apply scale-[0.97];
-    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 6px 28px rgba(184, 150, 12, 0.35);
   }
 
   .ux-btn-primary:focus-visible {
@@ -185,19 +185,11 @@
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    text-shadow: 0 0 30px rgba(184, 150, 12, 0.25);
   }
 
   .grain-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    opacity: 0.4;
-    pointer-events: none;
-    z-index: 9999;
+    display: none;
   }
 
   .liquid-gold-gradient {
@@ -215,11 +207,11 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(212, 175, 55, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 999px;
   }
 
   .scrollbar-thin:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(212, 175, 55, 0.4);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }

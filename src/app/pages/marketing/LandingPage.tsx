@@ -8,8 +8,7 @@ import { FAQSection } from "../../components/sections/FAQSection";
 
 export function LandingPage() {
   return (
-    <div className="relative">
-      <div className="grain-overlay" />
+    <div>
       <HeroSection />
       <ServicesGridSection />
       <QuoteSection />

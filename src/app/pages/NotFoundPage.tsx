@@ -2,9 +2,8 @@ import { Link } from "react-router";
 
 export function NotFoundPage() {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[var(--color-background)] px-4">
-      <div className="grain-overlay" />
-      <div className="relative z-10 flex max-w-2xl flex-col items-center text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--color-background)] px-4">
+      <div className="flex max-w-2xl flex-col items-center text-center">
         <p
           className="text-7xl font-light leading-none tracking-tighter text-[var(--color-primary)] sm:text-8xl lg:text-9xl"
           style={{ fontFamily: "var(--font-display)" }}

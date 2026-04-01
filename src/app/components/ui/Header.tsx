@@ -26,17 +26,21 @@ export function Header() {
       <header
         className={`fixed top-4 left-1/2 z-50 w-[92%] max-w-6xl -translate-x-1/2 rounded-full transition-all duration-500 ${
           isScrolled
-            ? "bg-[var(--color-surface-lowest)]/80 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
-            : "bg-[var(--color-surface-lowest)]/60"
+            ? "bg-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"
+            : "bg-white/70"
         } border border-[var(--color-border-subtle)] backdrop-blur-2xl`}
       >
         <div className="flex items-center justify-between px-4 py-3 sm:px-8">
           <Link
             to="/"
-            className="font-[var(--font-display)] text-lg tracking-[0.2em] text-[var(--color-primary)] sm:text-xl"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="flex items-center"
+            aria-label="Medallo Spa — Inicio"
           >
-            MEDALLO SPA
+            <img
+              src="/logo.svg"
+              alt="Medallo Spa"
+              className="h-12 w-auto mix-blend-multiply sm:h-14"
+            />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -65,7 +69,7 @@ export function Header() {
                 fontFamily: "var(--font-display)",
                 background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%)",
                 color: "var(--color-primary-foreground)",
-                boxShadow: "0 8px 24px rgba(212,175,55,0.2)",
+                boxShadow: "0 4px 16px rgba(184,150,12,0.25)",
               }}
             >
               Reservar
@@ -90,7 +94,7 @@ export function Header() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed inset-x-4 top-20 z-40 rounded-3xl border border-[var(--color-border-medium)] bg-[var(--color-surface-lowest)]/95 p-6 shadow-[0_24px_48px_rgba(0,0,0,0.5)] backdrop-blur-2xl lg:hidden"
+            className="fixed inset-x-4 top-20 z-40 rounded-3xl border border-[var(--color-border-subtle)] bg-white/95 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.1)] backdrop-blur-2xl lg:hidden"
           >
             <div className="space-y-1">
               {navLinks.map((link) => (

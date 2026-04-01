@@ -71,18 +71,18 @@ export function ServicesGridSection() {
                     backgroundImage: `url('${categoryImages[cat.id] ?? ""}')`,
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-[var(--color-background)]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                 <div className="relative flex h-full min-h-[340px] flex-col justify-end p-6 sm:p-8">
-                  <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                  <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
                     {topService?.badge ?? `${services.filter((s) => s.categoryId === cat.id).length} servicios`}
                   </span>
                   <h3
-                    className="text-2xl leading-tight text-[var(--color-text-primary)] sm:text-3xl"
+                    className="text-2xl leading-tight text-white sm:text-3xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {cat.label.split("(")[0].trim()}
                   </h3>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed text-[var(--color-text-secondary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                  <p className="mt-2 max-w-md text-sm leading-relaxed text-white/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                     {cat.description}
                   </p>
                 </div>
@@ -114,13 +114,13 @@ export function ServicesGridSection() {
                     backgroundImage: `url('${categoryImages[cat.id] ?? ""}')`,
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-[var(--color-background)]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                 <div className="relative flex h-full min-h-[300px] flex-col justify-end p-6 sm:p-8">
-                  <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                  <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-accent)]">
                     {topService?.badge ?? `${services.filter((s) => s.categoryId === cat.id).length} servicios`}
                   </span>
                   <h3
-                    className="text-2xl leading-tight text-[var(--color-text-primary)] sm:text-3xl"
+                    className="text-2xl leading-tight text-white sm:text-3xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {cat.label.split("(")[0].trim()}

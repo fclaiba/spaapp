@@ -4,8 +4,8 @@
   "description": "Encuentra el tratamiento correcto, entiende el resultado esperado y reserva sin fricción.",
   "start_url": "/",
   "display": "minimal-ui",
-  "background_color": "#0E0E0E",
-  "theme_color": "#0E0E0E",
+  "background_color": "#FAFAF7",
+  "theme_color": "#FAFAF7",
   "orientation": "any",
   "icons": [
     {

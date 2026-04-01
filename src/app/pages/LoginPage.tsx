@@ -54,8 +54,7 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)] px-4">
-      <div className="grain-overlay" />
-      <div className="relative z-10 w-full max-w-sm">
+      <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <p
             className="text-2xl tracking-[0.25em] text-[var(--color-primary)]"

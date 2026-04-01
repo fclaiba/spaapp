@@ -13,14 +13,18 @@ export function Footer() {
   const { settings } = useSpaSnapshot();
 
   return (
-    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-surface-lowest)] py-16 sm:py-20">
+    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
         <Link
           to="/"
-          className="inline-block text-2xl tracking-[0.25em] text-[var(--color-primary)] sm:text-3xl"
-          style={{ fontFamily: "var(--font-display)" }}
+          className="inline-flex items-center justify-center"
+          aria-label="Medallo Spa — Inicio"
         >
-          MEDALLO SPA
+          <img
+            src="/logo.svg"
+            alt="Medallo Spa"
+            className="h-20 w-auto mix-blend-multiply sm:h-24"
+          />
         </Link>
 
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-[var(--color-text-tertiary)]">
