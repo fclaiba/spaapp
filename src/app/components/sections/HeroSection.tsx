@@ -1,105 +1,74 @@
 import { motion } from "motion/react";
-import { ArrowRight, CalendarClock, CircleCheckBig, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
-import { landingHighlights } from "../../data/spa";
 
 export function HeroSection() {
   return (
-    <section className="ux-section pb-6 pt-8">
-      <div className="ux-shell">
-        <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-8"
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=80&auto=format&fit=crop')",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#131313]/40 via-[#131313]/20 to-[#131313]" />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="space-y-8"
+        >
+          <p className="ux-overline">
+            MEDALLO SPA &mdash; Aesthetics & IV Vitamins
+          </p>
+
+          <h1
+            className="ux-h1 mx-auto max-w-4xl"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-medium)] bg-[var(--color-surface)] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[var(--color-accent)]">
-              <Sparkles size={16} className="text-[var(--color-accent)]" />
-              Tu bienestar, nuestra prioridad
-            </div>
+            Belleza que{" "}
+            <em className="text-glow text-[var(--color-primary)]">
+              transforma
+            </em>
+          </h1>
 
-            <div className="space-y-5">
-              <span className="ux-overline">Treatments · Aesthetics · IV Therapy</span>
-              <h1 className="ux-h1 max-w-4xl">
-                Belleza que <em className="text-[var(--color-accent)]">transforma</em>
-              </h1>
-              <p className="ux-body max-w-2xl text-base sm:text-lg">
-                Encuentra el tratamiento correcto, entiende el resultado esperado y reserva sin friccion.
-              </p>
-            </div>
+          <p className="mx-auto max-w-xl text-lg leading-relaxed text-[var(--color-text-secondary)]">
+            Encuentra el tratamiento correcto, entiende el resultado esperado y
+            reserva sin fricción.
+          </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link to="/agendar" className="ux-btn-primary">
-                <CalendarClock size={18} />
-                Empezar reserva
-              </Link>
-              <a href="#servicios" className="ux-btn-secondary">
-                Ver servicios primero
-                <ArrowRight size={16} />
-              </a>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {landingHighlights.map((item) => (
-                <div key={item.label} className="ux-card rounded-[24px] p-5">
-                  <p className="text-2xl font-semibold text-[var(--color-text-primary)]">{item.value}</p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">{item.label}</p>
-                  <p className="mt-2 text-sm text-[var(--color-text-secondary)]">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="ux-card overflow-hidden rounded-[28px] p-6 sm:p-8"
-          >
-            <div className="rounded-[24px] bg-[var(--color-primary)] p-6 text-[var(--color-surface)]">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[rgba(253,250,247,0.75)]">
-                  Flujo principal
-                </span>
-                <span className="border border-[rgba(253,250,247,0.35)] bg-[rgba(253,250,247,0.08)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]">
-                  Premium
-                </span>
-              </div>
-              <div className="mt-8 space-y-4">
-                {[
-                  "Elegir servicio sin adivinar.",
-                  "Ver duracion, precio y resultado esperado.",
-                  "Confirmar turno con un resumen claro.",
-                ].map((step) => (
-                  <div
-                    key={step}
-                    className="flex items-start gap-3 rounded-[20px] border border-[rgba(253,250,247,0.22)] bg-[rgba(253,250,247,0.08)] p-4"
-                  >
-                    <CircleCheckBig size={18} className="mt-0.5 shrink-0 text-white" />
-                    <p className="text-sm leading-6 text-white/86">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[24px] border border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] p-5">
-                <p className="ux-overline">Para usuarios nuevos</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--color-text-primary)]">
-                  La primera accion importante siempre queda visible: reservar o explorar servicios.
-                </p>
-              </div>
-              <div className="rounded-[24px] border border-[var(--color-border-subtle)] p-5">
-                <p className="ux-overline">Para operaciones</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--color-text-primary)]">
-                  Cada reserva llega al panel administrativo con datos utiles, no solo con una pantalla de exito vacia.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link to="/agendar" className="ux-btn-primary">
+              Reserva tu experiencia
+            </Link>
+            <a
+              href="#servicios"
+              className="group inline-flex items-center gap-2 text-sm tracking-wide text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-primary)]"
+            >
+              Descubrir servicios
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </a>
+          </div>
+        </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-tertiary)]">
+          Scroll
+        </span>
+        <div className="h-12 w-px bg-gradient-to-b from-[var(--color-primary)] to-transparent" />
+      </motion.div>
     </section>
   );
 }

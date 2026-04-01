@@ -96,7 +96,7 @@ export function DashboardPage() {
                   <div key={serviceName} className="rounded-[24px] bg-[var(--color-surface-subtle)] p-4">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-semibold text-[var(--color-text-primary)]">{serviceName}</p>
-                      <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[var(--color-text-secondary)]">
+                      <span className="rounded-full bg-[var(--color-surface-subtle)] px-3 py-1 text-xs font-semibold text-[var(--color-text-secondary)]">
                         {count} reservas
                       </span>
                     </div>

@@ -24,12 +24,12 @@ export function AdminLayout() {
   );
 
   return (
-    <div className="min-h-screen bg-transparent text-[var(--color-text-primary)]">
+    <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
       <Toaster position="top-right" />
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[rgba(17,17,17,0.18)] backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm lg:hidden"
           onClick={closeMobileMenu}
         />
       )}
@@ -37,23 +37,32 @@ export function AdminLayout() {
       <div className="px-4 py-4 sm:px-6">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
           <aside
-            className={`fixed inset-y-4 left-4 z-50 flex w-[260px] flex-col rounded-[32px] border border-[var(--color-border-subtle)] bg-white p-5 shadow-[0_24px_60px_rgba(17,17,17,0.14)] transition-transform lg:static lg:translate-x-0 ${
+            className={`fixed inset-y-4 left-4 z-50 flex w-[260px] flex-col rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.4)] transition-transform lg:static lg:translate-x-0 ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-[120%]"
             }`}
           >
             <div className="flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)] font-semibold text-white">
+              <div
+                className="flex h-12 w-12 items-center justify-center rounded-full font-semibold"
+                style={{
+                  background: "linear-gradient(135deg, #d4af37 0%, #f2ca50 100%)",
+                  color: "#554300",
+                }}
+              >
                 MS
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-text-primary)]">
+                <p
+                  className="text-sm font-semibold tracking-[0.15em] text-[var(--color-primary)]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
                   Medallo Admin
                 </p>
-                <p className="ux-caption">Operacion y seguimiento</p>
+                <p className="ux-caption">Operación y seguimiento</p>
               </div>
             </div>
 
-            <nav className="flex-1 space-y-2 py-6">
+            <nav className="flex-1 space-y-1 py-6">
               {navItems.map((item) => {
                 const isActive =
                   location.pathname === item.href ||
@@ -64,9 +73,9 @@ export function AdminLayout() {
                     key={item.href}
                     to={item.href}
                     onClick={closeMobileMenu}
-                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors ${
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
                       isActive
-                        ? "bg-[var(--color-primary)] text-white"
+                        ? "bg-[var(--color-accent-soft)] text-[var(--color-primary)]"
                         : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-text-primary)]"
                     }`}
                   >
@@ -96,11 +105,11 @@ export function AdminLayout() {
           </aside>
 
           <main className="min-w-0">
-            <header className="ux-card mb-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <header className="mb-6 flex flex-col gap-4 rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  className="ux-btn-secondary px-3 py-3 lg:hidden"
+                  className="rounded-xl border border-[var(--color-border-medium)] p-3 text-[var(--color-text-secondary)] lg:hidden"
                   onClick={() => setIsMobileMenuOpen(true)}
                 >
                   <Menu size={18} />
@@ -108,11 +117,14 @@ export function AdminLayout() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="ux-overline">Panel operativo</p>
-                    <span className="rounded-full bg-[var(--color-surface-subtle)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
+                    <span className="ux-badge">
                       {currentNav?.label ?? "Admin"}
                     </span>
                   </div>
-                  <h1 className="mt-2 text-2xl font-semibold text-[var(--color-text-primary)]">
+                  <h1
+                    className="mt-2 text-2xl text-[var(--color-text-primary)]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
                     {currentNav?.label ?? "Panel"}
                   </h1>
                 </div>
@@ -121,9 +133,9 @@ export function AdminLayout() {
               <div className="flex items-center gap-3 self-end sm:self-auto">
                 <div className="text-right">
                   <p className="text-sm font-semibold text-[var(--color-text-primary)]">Medallo Spa Team</p>
-                  <p className="ux-caption">Administracion y operaciones</p>
+                  <p className="ux-caption">Administración y operaciones</p>
                 </div>
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-subtle)] text-[var(--color-primary)]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-primary)]">
                   <ShieldCheck size={18} />
                 </div>
               </div>

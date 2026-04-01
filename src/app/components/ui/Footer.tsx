@@ -1,86 +1,56 @@
-import { CalendarDays, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router";
 import { useSpaSnapshot } from "../../lib/spaStore";
-import { socialProfiles } from "../../data/spa";
+
+const footerLinks = [
+  { label: "Servicios", href: "#servicios" },
+  { label: "Proceso", href: "#proceso" },
+  { label: "Equipo", href: "#equipo" },
+  { label: "Testimonios", href: "#testimonios" },
+  { label: "FAQ", href: "#faq" },
+];
 
 export function Footer() {
   const { settings } = useSpaSnapshot();
 
   return (
-    <footer className="ux-section border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)] pb-8 pt-8">
-      <div className="ux-shell">
-        <div className="ux-card grid gap-8 p-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:p-10">
-          <div className="space-y-4">
-            <Link to="/">
-              <img
-                src="/logo.svg"
-                alt="Medallo Spa"
-                className="h-20 w-auto object-contain"
-              />
-            </Link>
-            <h2 className="ux-h2 max-w-lg">
-              La experiencia empieza antes del tratamiento: claridad, confianza y siguiente paso obvio.
-            </h2>
-            <p className="ux-body max-w-xl">
-              {settings.headline} El objetivo no es impresionar con ruido visual, sino ayudarte a reservar rapido y llegar con expectativa correcta.
-            </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link to="/agendar" className="ux-btn-primary">
-                <CalendarDays size={16} />
-                Reservar ahora
-              </Link>
-              <Link to="/dashboard" className="ux-btn-secondary">
-                Ver panel operativo
-              </Link>
-            </div>
-          </div>
+    <footer className="border-t border-[var(--color-border-subtle)] bg-[#0e0e0e] py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
+        <Link
+          to="/"
+          className="inline-block text-2xl tracking-[0.25em] text-[var(--color-primary)] sm:text-3xl"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          MEDALLO SPA
+        </Link>
 
-          <div className="space-y-4">
-            <h3 className="ux-h3">Contacto</h3>
-            <div className="space-y-3 text-sm text-[var(--color-text-secondary)]">
-              <p className="flex items-start gap-3">
-                <MapPin size={16} className="mt-1 text-[var(--color-accent)]" />
-                <span>{settings.address}</span>
-              </p>
-              <p className="flex items-center gap-3">
-                <Phone size={16} className="text-[var(--color-accent)]" />
-                <span>{settings.phone}</span>
-              </p>
-              <p className="flex items-center gap-3">
-                <Mail size={16} className="text-[var(--color-accent)]" />
-                <span>{settings.email}</span>
-              </p>
-              <p className="flex items-center gap-3">
-                <span className="text-[var(--color-accent)]">IG</span>
-                <span>{socialProfiles.instagram}</span>
-              </p>
-              <p className="flex items-center gap-3">
-                <span className="text-[var(--color-accent)]">TT</span>
-                <span>{socialProfiles.tiktok}</span>
-              </p>
-            </div>
-          </div>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-[var(--color-text-tertiary)]">
+          {settings.address}
+        </p>
 
-          <div className="space-y-4">
-            <h3 className="ux-h3">Atajos</h3>
-            <div className="grid gap-2 text-sm">
-              <a href="#servicios" className="ux-btn-ghost justify-start rounded-2xl border border-transparent px-0">
-                Ver servicios
-              </a>
-              <a href="#proceso" className="ux-btn-ghost justify-start rounded-2xl border border-transparent px-0">
-                Entender el proceso
-              </a>
-              <a href="#faq" className="ux-btn-ghost justify-start rounded-2xl border border-transparent px-0">
-                Resolver dudas
-              </a>
-            </div>
-          </div>
-        </div>
+        <nav className="mt-8 flex flex-wrap items-center justify-center gap-6">
+          {footerLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-[11px] uppercase tracking-[0.2em] text-[#4D4635] transition-colors hover:text-[var(--color-primary)]"
+            >
+              {link.label}
+            </a>
+          ))}
+          <Link
+            to="/agendar"
+            className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-primary)] transition-colors hover:text-[var(--color-accent)]"
+          >
+            Reservar
+          </Link>
+        </nav>
 
-        <div className="mt-6 flex flex-col gap-3 border-t border-[var(--color-border-subtle)] px-2 pt-5 text-[11px] text-[var(--color-text-tertiary)] sm:flex-row sm:items-center sm:justify-between">
-          <p>{settings.businessName} © {new Date().getFullYear()}.</p>
-          <p>Diseñado para que cada pantalla tenga una accion clara y verificable.</p>
-        </div>
+        <div className="mx-auto mt-8 h-px w-16 bg-gradient-to-r from-transparent via-[var(--color-border-medium)] to-transparent" />
+
+        <p className="mt-6 text-[11px] text-[var(--color-text-tertiary)]">
+          {settings.businessName} &copy; {new Date().getFullYear()}. Todos los
+          derechos reservados.
+        </p>
       </div>
     </footer>
   );

@@ -13,32 +13,43 @@ export function FAQSection() {
   return (
     <section id="faq" className="ux-section">
       <div className="ux-shell max-w-4xl">
-        <div className="mb-8 text-center">
-          <span className="ux-overline">Preguntas que destraban la decision</span>
-          <h2 className="ux-h2 mt-4">Menos incertidumbre, menos abandono en el flujo principal.</h2>
-          <p className="ux-body mt-4">
-            La FAQ responde dudas operativas concretas en vez de funcionar como relleno de marca.
-          </p>
+        <div className="mb-12 text-center">
+          <span className="ux-overline">Preguntas frecuentes</span>
+          <h2
+            className="ux-h2 mt-4"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Resuelve tus{" "}
+            <em className="text-[var(--color-primary)]">dudas</em>
+          </h2>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
-            <div key={faq.question} className="ux-card overflow-hidden">
+            <div
+              key={faq.question}
+              className="rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] transition-colors"
+            >
               <button
                 onClick={() => toggleFAQ(index)}
                 className="flex w-full items-center justify-between px-6 py-5 text-left"
                 aria-expanded={openIndex === index}
               >
-                <span className="pr-4 text-lg font-semibold text-[var(--color-text-primary)]">{faq.question}</span>
+                <span
+                  className="pr-4 text-lg text-[var(--color-text-primary)]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {faq.question}
+                </span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
-                  className="shrink-0 text-[var(--color-accent)]"
+                  className="shrink-0 text-[var(--color-primary)]"
                 >
                   <ChevronDown size={20} />
                 </motion.div>
               </button>
-              
+
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
@@ -48,7 +59,7 @@ export function FAQSection() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="px-6 pb-6 text-sm leading-6 text-[var(--color-text-secondary)]">
+                    <p className="px-6 pb-6 text-sm leading-relaxed text-[var(--color-text-secondary)]">
                       {faq.answer}
                     </p>
                   </motion.div>

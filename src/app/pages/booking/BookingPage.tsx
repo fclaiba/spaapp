@@ -336,9 +336,9 @@ export function BookingPage() {
                 {selectedDateLabel}, {selectedTime}
               </p>
             </div>
-            <div className="rounded-[24px] bg-[var(--color-primary)] p-5">
-              <p className="ux-caption uppercase text-white/70">Estado</p>
-              <p className="mt-2 text-base font-semibold text-white">{confirmedAppointment.status}</p>
+            <div className="rounded-[24px] p-5" style={{ background: "linear-gradient(135deg, #d4af37, #f2ca50)" }}>
+              <p className="ux-caption uppercase text-[#554300]/70">Estado</p>
+              <p className="mt-2 text-base font-semibold text-[#554300]">{confirmedAppointment.status}</p>
             </div>
             <div className="rounded-[24px] border border-[var(--color-border-subtle)] p-5">
               <p className="ux-caption uppercase">Referencia</p>
@@ -373,7 +373,7 @@ export function BookingPage() {
               key={item.id}
               className={`rounded-full px-4 py-2 text-sm font-semibold ${
                 step === item.id
-                  ? "bg-[var(--color-primary)] text-white"
+                  ? "bg-[var(--color-accent-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]"
                   : item.id < step
                     ? "bg-[var(--color-accent-soft)] text-[var(--color-text-primary)]"
                     : "bg-[var(--color-surface-subtle)] text-[var(--color-text-secondary)]"
@@ -413,7 +413,7 @@ export function BookingPage() {
                     }}
                     className={`rounded-full px-4 py-2 text-sm font-semibold ${
                       selectedCategoryId === category.id
-                        ? "bg-[var(--color-primary)] text-white"
+                        ? "bg-[var(--color-accent-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]"
                         : "border border-[var(--color-border-medium)] text-[var(--color-text-secondary)]"
                     }`}
                   >

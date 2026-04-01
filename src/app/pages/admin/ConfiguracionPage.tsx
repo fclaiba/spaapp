@@ -64,7 +64,7 @@ export function ConfiguracionPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold ${
                   activeTab === tab.id
-                    ? "bg-[var(--color-primary)] text-white"
+                    ? "bg-[var(--color-accent-soft)] text-[var(--color-primary)]"
                     : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-subtle)]"
                 }`}
               >
@@ -191,7 +191,7 @@ export function ConfiguracionPage() {
                     }`}
                   >
                     <span
-                      className={`block h-5 w-5 rounded-full bg-white transition-transform ${
+                      className={`block h-5 w-5 rounded-full bg-[var(--color-text-primary)] transition-transform ${
                         formState.reminderEnabled ? "translate-x-7" : "translate-x-0"
                       }`}
                     />

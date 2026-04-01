@@ -219,7 +219,7 @@ export function CitasPage() {
             <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div className="grid gap-2">
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
+                  <span className="rounded-full bg-[var(--color-accent-soft)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
                     {format(new Date(appointment.startsAt), "HH:mm")}
                   </span>
                   <span className="text-sm font-semibold text-[var(--color-text-primary)]">{appointment.customerName}</span>

@@ -182,7 +182,7 @@ export function ClientesPage() {
           {filteredClients.map((client) => (
             <article key={client.email} className="rounded-[28px] border border-[var(--color-border-subtle)] p-5">
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-semibold text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-accent-soft)] text-sm font-semibold text-[var(--color-primary)]">
                   {client.name
                     .split(" ")
                     .slice(0, 2)

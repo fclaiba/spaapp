@@ -77,7 +77,7 @@ export function SourceChart({ data, delay = 0 }: SourceChartProps) {
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: delay + 0.4, type: "spring" }}
-            className="flex h-[110px] w-[110px] flex-col items-center justify-center rounded-full border border-[var(--color-border-subtle)] bg-white text-center shadow-inner"
+            className="flex h-[110px] w-[110px] flex-col items-center justify-center rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface)] text-center shadow-inner"
           >
             <span className="block text-3xl font-semibold tracking-tight text-[var(--color-text-primary)]">{topSource?.value ?? 0}%</span>
             <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">
