@@ -16,6 +16,7 @@ export interface SpaSnapshot {
   appointments: AppointmentRecord[];
   clients: ClientRecord[];
   settings: SettingsRecord;
+  isLoading: boolean;
 }
 
 // ─── Hook: reactive snapshot ──────────────────────────────────────────────────
@@ -29,9 +30,18 @@ export function useSpaSnapshot(): SpaSnapshot {
     isAuthenticated ? {} : "skip",
   );
 
+  const isLoading =
+    isAuthenticated &&
+    (rawAppointments === undefined ||
+      rawClients === undefined ||
+      rawSettings === undefined);
+
   const appointments: AppointmentRecord[] = useMemo(
     () =>
-      (rawAppointments ?? seedAppointments).map((a) => ({
+      (isAuthenticated
+        ? (rawAppointments ?? [])
+        : (rawAppointments ?? seedAppointments)
+      ).map((a) => ({
         id: a.id as string,
         serviceId: a.serviceId,
         serviceName: a.serviceName,
@@ -48,7 +58,7 @@ export function useSpaSnapshot(): SpaSnapshot {
         notes: a.notes,
         createdAt: a.createdAt,
       })),
-    [rawAppointments],
+    [rawAppointments, isAuthenticated],
   );
 
   const clients: ClientRecord[] = useMemo(
@@ -75,8 +85,8 @@ export function useSpaSnapshot(): SpaSnapshot {
   );
 
   return useMemo(
-    () => ({ appointments, clients, settings }),
-    [appointments, clients, settings],
+    () => ({ appointments, clients, settings, isLoading }),
+    [appointments, clients, settings, isLoading],
   );
 }
 

@@ -1,5 +1,11 @@
 import { ServiceDetailModal } from "./ServiceDetailModal";
+import { CategoryServicesModal } from "./CategoryServicesModal";
 
 export function ModalHost() {
-  return <ServiceDetailModal />;
+  return (
+    <>
+      <CategoryServicesModal />
+      <ServiceDetailModal />
+    </>
+  );
 }

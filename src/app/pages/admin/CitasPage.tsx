@@ -63,7 +63,7 @@ export function CitasPage() {
 
   const submitAppointment = async () => {
     if (!formState.customerName || !formState.email || !formState.phone) {
-      toast.error("Completa nombre, email y telefono.");
+      toast.error("Completa nombre, email y teléfono.");
       return;
     }
 
@@ -110,23 +110,27 @@ export function CitasPage() {
               value={formState.customerName}
               onChange={(event) => setFormState((current) => ({ ...current, customerName: event.target.value }))}
               placeholder="Nombre del cliente"
+              aria-label="Nombre del cliente"
               className="ux-input"
             />
             <input
               value={formState.email}
               onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
               placeholder="Email"
+              aria-label="Email"
               className="ux-input"
             />
             <input
               value={formState.phone}
               onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
-              placeholder="Telefono"
+              placeholder="Teléfono"
+              aria-label="Teléfono"
               className="ux-input"
             />
             <select
               value={formState.serviceId}
               onChange={(event) => setFormState((current) => ({ ...current, serviceId: event.target.value }))}
+              aria-label="Servicio"
               className="ux-input"
             >
               {services.map((service) => (
@@ -139,12 +143,14 @@ export function CitasPage() {
               type="date"
               value={formState.date}
               onChange={(event) => setFormState((current) => ({ ...current, date: event.target.value }))}
+              aria-label="Fecha"
               className="ux-input"
             />
             <input
               type="time"
               value={formState.time}
               onChange={(event) => setFormState((current) => ({ ...current, time: event.target.value }))}
+              aria-label="Horario"
               className="ux-input"
             />
             <select
@@ -152,6 +158,7 @@ export function CitasPage() {
               onChange={(event) =>
                 setFormState((current) => ({ ...current, origin: event.target.value as LeadSource }))
               }
+              aria-label="Origen del cliente"
               className="ux-input"
             >
               {leadSources.map((source) => (
@@ -173,13 +180,13 @@ export function CitasPage() {
       <section className="ux-card p-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex flex-wrap items-center gap-3">
-            <button type="button" className="ux-btn-secondary px-3 py-3" onClick={() => setSelectedDate(addDays(selectedDate, -1))}>
+            <button type="button" className="ux-btn-secondary px-3 py-3" onClick={() => setSelectedDate(addDays(selectedDate, -1))} aria-label="Día anterior">
               <ChevronLeft size={16} />
             </button>
             <div className="rounded-full bg-[var(--color-surface-subtle)] px-4 py-3 text-sm font-semibold text-[var(--color-text-primary)]">
               {format(selectedDate, "EEEE d 'de' MMMM", { locale: es })}
             </div>
-            <button type="button" className="ux-btn-secondary px-3 py-3" onClick={() => setSelectedDate(addDays(selectedDate, 1))}>
+            <button type="button" className="ux-btn-secondary px-3 py-3" onClick={() => setSelectedDate(addDays(selectedDate, 1))} aria-label="Día siguiente">
               <ChevronRight size={16} />
             </button>
             <button type="button" className="ux-btn-ghost" onClick={() => setSelectedDate(new Date())}>
@@ -195,11 +202,13 @@ export function CitasPage() {
                 onChange={(event) => setSearchTerm(event.target.value)}
                 className="ux-input pl-11"
                 placeholder="Buscar cliente o servicio"
+                aria-label="Buscar cliente o servicio"
               />
             </div>
             <select
               value={filterStatus}
               onChange={(event) => setFilterStatus(event.target.value as AppointmentStatus | "Todos")}
+              aria-label="Filtrar por estado"
               className="ux-input"
             >
               <option value="Todos">Todos los estados</option>
@@ -244,6 +253,7 @@ export function CitasPage() {
                       toast.error("No se pudo actualizar el estado.");
                     }
                   }}
+                  aria-label={`Estado de la cita, ${appointment.customerName}`}
                   className="ux-input min-w-[180px]"
                 >
                   {statusOptions.map((status) => (

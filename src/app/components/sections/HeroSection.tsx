@@ -5,14 +5,15 @@ import { Link } from "react-router";
 export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=80&auto=format&fit=crop')",
-        }}
+      <img
+        src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200&q=80&auto=format&fit=crop"
+        srcSet="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=640&q=80&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1024&q=80&auto=format&fit=crop 1024w, https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=80&auto=format&fit=crop 1920w"
+        sizes="100vw"
+        alt="Spa de lujo con ambiente relajante"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+        fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#131313]/40 via-[#131313]/20 to-[#131313]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-background)]/40 via-[var(--color-background)]/20 to-[var(--color-background)]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
         <motion.div

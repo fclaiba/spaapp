@@ -1,13 +1,15 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
-import type { ServiceDefinition } from "../../data/spa";
+import type { ServiceCategory, ServiceDefinition } from "../../data/spa";
 
 export type ModalState =
   | { type: "none" }
-  | { type: "service"; service: ServiceDefinition; categoryId: string };
+  | { type: "service"; service: ServiceDefinition; categoryId: string }
+  | { type: "category"; category: ServiceCategory };
 
 interface ModalContextValue {
   modal: ModalState;
   openService: (service: ServiceDefinition, categoryId: string) => void;
+  openCategory: (category: ServiceCategory) => void;
   close: () => void;
 }
 
@@ -22,10 +24,15 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const openCategory = useCallback(
+    (category: ServiceCategory) => setModal({ type: "category", category }),
+    [],
+  );
+
   const close = useCallback(() => setModal({ type: "none" }), []);
 
   return (
-    <ModalContext.Provider value={{ modal, openService, close }}>
+    <ModalContext.Provider value={{ modal, openService, openCategory, close }}>
       {children}
     </ModalContext.Provider>
   );

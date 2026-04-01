@@ -15,7 +15,7 @@ export function AdminLayout() {
     { icon: LayoutDashboard, label: "Resumen", href: "/dashboard" },
     { icon: CalendarDays, label: "Citas", href: "/dashboard/citas" },
     { icon: Users, label: "Clientes", href: "/dashboard/clientes" },
-    { icon: Settings, label: "Configuracion", href: "/dashboard/configuracion" },
+    { icon: Settings, label: "Configuración", href: "/dashboard/configuracion" },
   ];
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -45,8 +45,8 @@ export function AdminLayout() {
               <div
                 className="flex h-12 w-12 items-center justify-center rounded-full font-semibold"
                 style={{
-                  background: "linear-gradient(135deg, #d4af37 0%, #f2ca50 100%)",
-                  color: "#554300",
+                  background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
+                  color: "var(--color-primary-foreground)",
                 }}
               >
                 MS

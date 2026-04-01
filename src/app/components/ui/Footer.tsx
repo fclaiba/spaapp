@@ -13,7 +13,7 @@ export function Footer() {
   const { settings } = useSpaSnapshot();
 
   return (
-    <footer className="border-t border-[var(--color-border-subtle)] bg-[#0e0e0e] py-16 sm:py-20">
+    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-surface-lowest)] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
         <Link
           to="/"
@@ -32,7 +32,7 @@ export function Footer() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[11px] uppercase tracking-[0.2em] text-[#4D4635] transition-colors hover:text-[var(--color-primary)]"
+              className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-nav-muted)] transition-colors hover:text-[var(--color-primary)]"
             >
               {link.label}
             </a>

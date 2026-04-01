@@ -71,10 +71,10 @@ export function AboutUsSection() {
         >
           <div className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-8 lg:p-10">
             <div className="grid gap-6 sm:grid-cols-3">
-              <div className="rounded-xl p-5" style={{ background: "linear-gradient(135deg, #d4af37 0%, #f2ca50 100%)" }}>
-                <ShieldCheck size={20} className="text-[#554300]" />
-                <p className="mt-5 text-lg font-semibold text-[#554300]">Confianza</p>
-                <p className="mt-2 text-sm leading-relaxed text-[#554300]/70">
+              <div className="rounded-xl p-5" style={{ background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)" }}>
+                <ShieldCheck size={20} className="text-[var(--color-primary-foreground)]" />
+                <p className="mt-5 text-lg font-semibold text-[var(--color-primary-foreground)]">Confianza</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-primary-foreground)]/70">
                   Sin pagos falsos ni confirmaciones simuladas.
                 </p>
               </div>

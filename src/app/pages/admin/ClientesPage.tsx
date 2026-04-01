@@ -17,7 +17,7 @@ export function ClientesPage() {
     name: "",
     email: "",
     phone: "",
-    preferredService: "Evaluacion inicial",
+    preferredService: "Evaluación inicial",
     origin: "Instagram" as LeadSource,
     notes: "",
   });
@@ -41,7 +41,7 @@ export function ClientesPage() {
 
   const submitClient = async () => {
     if (!formState.name || !formState.email || !formState.phone) {
-      toast.error("Completa nombre, email y telefono.");
+      toast.error("Completa nombre, email y teléfono.");
       return;
     }
 
@@ -53,7 +53,7 @@ export function ClientesPage() {
         name: "",
         email: "",
         phone: "",
-        preferredService: "Evaluacion inicial",
+        preferredService: "Evaluación inicial",
         origin: "Instagram",
         notes: "",
       });
@@ -72,8 +72,8 @@ export function ClientesPage() {
       >
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <span className="ux-overline">Base de relacion</span>
-            <h2 className="ux-h2 mt-3">Los clientes dejan de ser una tabla fria y pasan a tener contexto accionable.</h2>
+            <span className="ux-overline">Base de relación</span>
+            <h2 className="ux-h2 mt-3">Los clientes dejan de ser una tabla fría y pasan a tener contexto accionable.</h2>
           </div>
           <button type="button" className="ux-btn-primary w-fit" onClick={() => setIsFormOpen((value) => !value)}>
             <Plus size={16} />
@@ -87,18 +87,21 @@ export function ClientesPage() {
               value={formState.name}
               onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))}
               placeholder="Nombre completo"
+              aria-label="Nombre completo"
               className="ux-input"
             />
             <input
               value={formState.email}
               onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
               placeholder="Email"
+              aria-label="Email"
               className="ux-input"
             />
             <input
               value={formState.phone}
               onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
-              placeholder="Telefono"
+              placeholder="Teléfono"
+              aria-label="Teléfono"
               className="ux-input"
             />
             <input
@@ -107,6 +110,7 @@ export function ClientesPage() {
                 setFormState((current) => ({ ...current, preferredService: event.target.value }))
               }
               placeholder="Servicio preferido"
+              aria-label="Servicio preferido"
               className="ux-input"
             />
             <select
@@ -114,6 +118,7 @@ export function ClientesPage() {
               onChange={(event) =>
                 setFormState((current) => ({ ...current, origin: event.target.value as LeadSource }))
               }
+              aria-label="Origen del cliente"
               className="ux-input"
             >
               {leadSources.map((source) => (
@@ -126,6 +131,7 @@ export function ClientesPage() {
               value={formState.notes}
               onChange={(event) => setFormState((current) => ({ ...current, notes: event.target.value }))}
               placeholder="Notas internas"
+              aria-label="Notas internas"
               className="ux-input"
             />
             <div className="lg:col-span-3 flex justify-end">
@@ -164,7 +170,7 @@ export function ClientesPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Directorio de clientes</h3>
-              <p className="ux-body mt-1 text-sm">Busqueda simple y contexto suficiente para accionar.</p>
+              <p className="ux-body mt-1 text-sm">Búsqueda simple y contexto suficiente para accionar.</p>
             </div>
             <div className="relative min-w-[260px]">
               <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-tertiary)]" />
@@ -172,7 +178,8 @@ export function ClientesPage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 className="ux-input pl-11"
-                placeholder="Buscar por nombre, email o telefono"
+                placeholder="Buscar por nombre, email o teléfono"
+                aria-label="Buscar por nombre, email o teléfono"
               />
             </div>
           </div>
@@ -221,7 +228,7 @@ export function ClientesPage() {
                       <p className="mt-1 text-lg font-semibold text-[var(--color-text-primary)]">${client.totalSpent}</p>
                     </div>
                     <div className="rounded-2xl bg-[var(--color-surface-subtle)] px-4 py-3">
-                      <p className="ux-caption uppercase">Proxima cita</p>
+                      <p className="ux-caption uppercase">Próxima cita</p>
                       <p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">
                         {client.nextAppointment ? "Agendada" : "Sin fecha"}
                       </p>
@@ -241,7 +248,7 @@ export function ClientesPage() {
           {filteredClients.length === 0 ? (
             <div className="rounded-[28px] border border-dashed border-[var(--color-border-medium)] p-10 text-center text-sm text-[var(--color-text-secondary)] xl:col-span-2">
               <Users size={24} className="mx-auto mb-3 text-[var(--color-accent)]" />
-              No hay clientes que coincidan con la busqueda.
+              No hay clientes que coincidan con la búsqueda.
             </div>
           ) : null}
         </div>

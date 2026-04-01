@@ -79,10 +79,10 @@ export function LoginPage() {
             onClick={() => { setMode("signIn"); setError(null); }}
             className={`flex-1 rounded-full py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-all ${
               mode === "signIn"
-                ? "text-[#554300]"
+                ? "text-[var(--color-primary-foreground)]"
                 : "text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]"
             }`}
-            style={mode === "signIn" ? { background: "linear-gradient(135deg, #d4af37, #f2ca50)" } : undefined}
+            style={mode === "signIn" ? { background: "linear-gradient(135deg, var(--color-primary), var(--color-accent))" } : undefined}
           >
             Entrar
           </button>
@@ -91,10 +91,10 @@ export function LoginPage() {
             onClick={() => { setMode("signUp"); setError(null); }}
             className={`flex-1 rounded-full py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-all ${
               mode === "signUp"
-                ? "text-[#554300]"
+                ? "text-[var(--color-primary-foreground)]"
                 : "text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]"
             }`}
-            style={mode === "signUp" ? { background: "linear-gradient(135deg, #d4af37, #f2ca50)" } : undefined}
+            style={mode === "signUp" ? { background: "linear-gradient(135deg, var(--color-primary), var(--color-accent))" } : undefined}
           >
             Registrar
           </button>
@@ -132,6 +132,7 @@ export function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-text-tertiary)] hover:text-[var(--color-primary)]"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}

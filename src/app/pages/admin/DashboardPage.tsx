@@ -5,6 +5,7 @@ import { KPICard } from "../../components/dashboard/KPICard";
 import { RecentClientsTable } from "../../components/dashboard/RecentClientsTable";
 import { RevenueChart } from "../../components/dashboard/RevenueChart";
 import { SourceChart } from "../../components/dashboard/SourceChart";
+import { Skeleton } from "../../components/ui/Skeleton";
 import { getSourceDistribution, getWeeklyOverview, useSpaSnapshot } from "../../lib/spaStore";
 
 const isCurrentMonth = (isoDate: string) => {
@@ -14,7 +15,36 @@ const isCurrentMonth = (isoDate: string) => {
 };
 
 export function DashboardPage() {
-  const { appointments, clients } = useSpaSnapshot();
+  const { appointments, clients, settings, isLoading } = useSpaSnapshot();
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="ux-card p-6 sm:p-8">
+          <Skeleton className="h-6 w-48" />
+          <Skeleton className="mt-3 h-10 w-96" />
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="ux-card p-6">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="mt-4 h-8 w-16" />
+              <Skeleton className="mt-2 h-4 w-32" />
+            </div>
+          ))}
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="ux-card p-6">
+            <Skeleton className="h-64 w-full" />
+          </div>
+          <div className="ux-card p-6">
+            <Skeleton className="h-64 w-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const weeklyOverview = getWeeklyOverview(appointments);
   const sourceDistribution = getSourceDistribution(appointments);
 
@@ -87,7 +117,7 @@ export function DashboardPage() {
           className="space-y-6"
         >
           <div className="ux-card p-6">
-            <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Servicios con mas demanda</h3>
+            <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Servicios con más demanda</h3>
             <div className="mt-4 space-y-3">
               {Array.from(topServices)
                 .sort((left, right) => right[1] - left[1])
@@ -106,13 +136,13 @@ export function DashboardPage() {
           </div>
 
           <div className="ux-card p-6">
-            <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Lectura rapida</h3>
+            <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Lectura rápida</h3>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[var(--color-text-secondary)]">
               <li className="rounded-[24px] bg-[var(--color-surface-subtle)] px-4 py-4">
-                Si el operador entra aqui, debe saber en segundos cuantas citas nuevas llegaron.
+                Si el operador entra aquí, debe saber en segundos cuántas citas nuevas llegaron.
               </li>
               <li className="rounded-[24px] bg-[var(--color-surface-subtle)] px-4 py-4">
-                Los canales de origen ya no son decorativos: ayudan a entender de donde llega la demanda.
+                Los canales de origen ya no son decorativos: ayudan a entender de dónde llega la demanda.
               </li>
               <li className="rounded-[24px] bg-[var(--color-surface-subtle)] px-4 py-4">
                 El panel refleja reservas reales hechas desde el nuevo flujo de booking.

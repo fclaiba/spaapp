@@ -5,7 +5,7 @@ export function BookingLayout() {
   return (
     <div className="min-h-screen bg-[var(--color-background)] pb-10">
       <header className="px-4 pt-4 sm:px-6">
-        <div className="ux-shell flex items-center justify-between rounded-full border border-[var(--color-border-subtle)] bg-[rgba(14,14,14,0.85)] px-4 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl sm:px-6">
+        <div className="ux-shell flex items-center justify-between rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface-lowest)]/85 px-4 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.3)] backdrop-blur-2xl sm:px-6">
           <div>
             <p
               className="text-sm font-semibold tracking-[0.2em] text-[var(--color-primary)]"

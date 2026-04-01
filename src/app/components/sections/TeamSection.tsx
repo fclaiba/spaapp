@@ -35,8 +35,8 @@ export function TeamSection() {
                 <div
                   className="flex h-14 w-14 items-center justify-center rounded-full text-lg font-semibold"
                   style={{
-                    background: "linear-gradient(135deg, #d4af37 0%, #f2ca50 100%)",
-                    color: "#554300",
+                    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
+                    color: "var(--color-primary-foreground)",
                   }}
                 >
                   {member.name

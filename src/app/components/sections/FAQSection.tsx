@@ -20,7 +20,7 @@ export function FAQSection() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             Resuelve tus{" "}
-            <em className="text-[var(--color-primary)]">dudas</em>
+            <em className="text-[var(--color-primary)]">preguntas</em>
           </h2>
         </div>
 

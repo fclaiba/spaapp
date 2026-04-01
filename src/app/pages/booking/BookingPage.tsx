@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   CalendarDays,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   Clock3,
   CreditCard,
@@ -34,8 +35,8 @@ const availableTimes = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00", "1
 
 const formSchema = z.object({
   nombre: z.string().min(2, "Ingresa tu nombre completo."),
-  email: z.string().email("Ingresa un email valido."),
-  telefono: z.string().min(8, "Ingresa un telefono valido."),
+  email: z.string().email("Ingresa un email válido."),
+  telefono: z.string().min(8, "Ingresa un teléfono válido."),
   origen: z.enum(["Instagram", "Google", "Referido", "WhatsApp", "Walk-in"]),
   notas: z.string().max(240, "Usa un maximo de 240 caracteres.").optional(),
 });
@@ -208,7 +209,7 @@ function MockPaymentForm({ appointmentId, price, serviceName, onSuccess, onBack 
 
       <div className="flex flex-col justify-between gap-3 border-t border-[var(--color-border-subtle)] pt-5 sm:flex-row">
         <button type="button" onClick={onBack} className="ux-btn-secondary" disabled={isProcessing}>
-          Atras
+          Atrás
         </button>
         <button
           type="submit"
@@ -233,9 +234,14 @@ export function BookingPage() {
     ? (initialCategory as string)
     : serviceCategories[0].id;
 
+  const SERVICES_PER_PAGE = 4;
+
   const [step, setStep] = useState(1);
   const [selectedCategoryId, setSelectedCategoryId] = useState(initialCategoryId);
   const [selectedServiceId, setSelectedServiceId] = useState<string>("");
+  const [servicePage, setServicePage] = useState(0);
+  const [datePage, setDatePage] = useState(0);
+  const DATES_PER_PAGE = 5;
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [confirmedAppointment, setConfirmedAppointment] = useState<AppointmentRecord | null>(null);
@@ -269,6 +275,12 @@ export function BookingPage() {
   const servicesForCategory = useMemo(
     () => services.filter((s) => s.categoryId === selectedCategoryId),
     [selectedCategoryId],
+  );
+
+  const serviceTotalPages = Math.ceil(servicesForCategory.length / SERVICES_PER_PAGE);
+  const pagedServicesForCategory = servicesForCategory.slice(
+    servicePage * SERVICES_PER_PAGE,
+    (servicePage + 1) * SERVICES_PER_PAGE,
   );
 
   const selectedService = useMemo(
@@ -336,9 +348,9 @@ export function BookingPage() {
                 {selectedDateLabel}, {selectedTime}
               </p>
             </div>
-            <div className="rounded-[24px] p-5" style={{ background: "linear-gradient(135deg, #d4af37, #f2ca50)" }}>
-              <p className="ux-caption uppercase text-[#554300]/70">Estado</p>
-              <p className="mt-2 text-base font-semibold text-[#554300]">{confirmedAppointment.status}</p>
+            <div className="rounded-[24px] p-5" style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-accent))" }}>
+              <p className="ux-caption uppercase text-[var(--color-primary-foreground)]/70">Estado</p>
+              <p className="mt-2 text-base font-semibold text-[var(--color-primary-foreground)]">{confirmedAppointment.status}</p>
             </div>
             <div className="rounded-[24px] border border-[var(--color-border-subtle)] p-5">
               <p className="ux-caption uppercase">Referencia</p>
@@ -410,6 +422,7 @@ export function BookingPage() {
                     onClick={() => {
                       setSelectedCategoryId(category.id);
                       setSelectedServiceId("");
+                      setServicePage(0);
                     }}
                     className={`rounded-full px-4 py-2 text-sm font-semibold ${
                       selectedCategoryId === category.id
@@ -422,33 +435,83 @@ export function BookingPage() {
                 ))}
               </div>
 
-              <div className="grid gap-4">
-                {servicesForCategory.map((service) => {
-                  const isSelected = service.id === selectedServiceId;
-                  return (
+              <div className="space-y-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`${selectedCategoryId}-${servicePage}`}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="grid gap-4"
+                  >
+                    {pagedServicesForCategory.map((service) => {
+                      const isSelected = service.id === selectedServiceId;
+                      return (
+                        <button
+                          key={service.id}
+                          type="button"
+                          onClick={() => setSelectedServiceId(service.id)}
+                          className={`rounded-[28px] border p-5 text-left transition-all ${
+                            isSelected
+                              ? "border-[var(--color-accent)] bg-[var(--color-surface-subtle)]"
+                              : "border-[var(--color-border-subtle)] hover:border-[var(--color-accent-soft)]"
+                          }`}
+                        >
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                            <div>
+                              <p className="text-lg font-semibold text-[var(--color-text-primary)]">{service.name}</p>
+                              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{service.summary}</p>
+                            </div>
+                            <div className="shrink-0 text-left sm:text-right">
+                              <p className="text-xl font-semibold text-[var(--color-text-primary)]">${service.price}</p>
+                              <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{service.duration} min</p>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </motion.div>
+                </AnimatePresence>
+
+                {serviceTotalPages > 1 && (
+                  <div className="flex items-center justify-center gap-1 pt-2">
                     <button
-                      key={service.id}
                       type="button"
-                      onClick={() => setSelectedServiceId(service.id)}
-                      className={`rounded-[28px] border p-5 text-left transition-all ${
-                        isSelected
-                          ? "border-[var(--color-accent)] bg-[var(--color-surface-subtle)]"
-                          : "border-[var(--color-border-subtle)] hover:border-[var(--color-accent-soft)]"
-                      }`}
+                      onClick={() => setServicePage((p) => Math.max(0, p - 1))}
+                      disabled={servicePage === 0}
+                      className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-primary)] disabled:opacity-30"
+                      aria-label="Página anterior"
                     >
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <p className="text-lg font-semibold text-[var(--color-text-primary)]">{service.name}</p>
-                          <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{service.summary}</p>
-                        </div>
-                        <div className="shrink-0 text-left sm:text-right">
-                          <p className="text-xl font-semibold text-[var(--color-text-primary)]">${service.price}</p>
-                          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{service.duration} min</p>
-                        </div>
-                      </div>
+                      <ChevronLeft size={16} />
                     </button>
-                  );
-                })}
+
+                    {Array.from({ length: serviceTotalPages }, (_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setServicePage(i)}
+                        className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium transition-all ${
+                          servicePage === i
+                            ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-[0_2px_8px_rgba(212,175,55,0.3)]"
+                            : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-primary)]"
+                        }`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() => setServicePage((p) => Math.min(serviceTotalPages - 1, p + 1))}
+                      disabled={servicePage === serviceTotalPages - 1}
+                      className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-primary)] disabled:opacity-30"
+                      aria-label="Página siguiente"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end">
@@ -486,22 +549,45 @@ export function BookingPage() {
                 <div className="space-y-3">
                   <p className="text-sm font-semibold text-[var(--color-text-primary)]">Fecha</p>
                   <div className="grid gap-3">
-                    {next10Days.map((date) => (
-                      <button
-                        key={date.iso}
-                        type="button"
-                        onClick={() => setSelectedDate(date.iso)}
-                        className={`rounded-[24px] border px-4 py-4 text-left ${
-                          selectedDate === date.iso
-                            ? "border-[var(--color-accent)] bg-[var(--color-surface-subtle)]"
-                            : "border-[var(--color-border-subtle)]"
-                        }`}
-                      >
-                        <p className="text-sm font-semibold text-[var(--color-text-primary)]">{date.label}</p>
-                        <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{date.fullLabel}</p>
-                      </button>
-                    ))}
+                    {next10Days
+                      .slice(datePage * DATES_PER_PAGE, (datePage + 1) * DATES_PER_PAGE)
+                      .map((date) => (
+                        <button
+                          key={date.iso}
+                          type="button"
+                          onClick={() => setSelectedDate(date.iso)}
+                          className={`rounded-[24px] border px-4 py-4 text-left ${
+                            selectedDate === date.iso
+                              ? "border-[var(--color-accent)] bg-[var(--color-surface-subtle)]"
+                              : "border-[var(--color-border-subtle)]"
+                          }`}
+                        >
+                          <p className="text-sm font-semibold text-[var(--color-text-primary)]">{date.label}</p>
+                          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{date.fullLabel}</p>
+                        </button>
+                      ))}
                   </div>
+                  {Math.ceil(next10Days.length / DATES_PER_PAGE) > 1 && (
+                    <div className="flex items-center justify-center gap-1 pt-1">
+                      {Array.from(
+                        { length: Math.ceil(next10Days.length / DATES_PER_PAGE) },
+                        (_, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setDatePage(i)}
+                            className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-all ${
+                              datePage === i
+                                ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-[0_2px_8px_rgba(212,175,55,0.3)]"
+                                : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-subtle)] hover:text-[var(--color-primary)]"
+                            }`}
+                          >
+                            {i + 1}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-3">
@@ -528,7 +614,7 @@ export function BookingPage() {
 
               <div className="flex flex-col justify-between gap-3 border-t border-[var(--color-border-subtle)] pt-5 sm:flex-row">
                 <button type="button" onClick={goToPrevStep} className="ux-btn-secondary">
-                  Atras
+                  Atrás
                 </button>
                 <button
                   type="button"
@@ -592,7 +678,7 @@ export function BookingPage() {
                     ) : null}
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[var(--color-text-primary)]">Telefono</label>
+                    <label className="mb-2 block text-sm font-semibold text-[var(--color-text-primary)]">Teléfono</label>
                     <div className="relative">
                       <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-tertiary)]" />
                       <input {...form.register("telefono")} className="ux-input pl-11" placeholder="+57 300..." />
@@ -630,7 +716,7 @@ export function BookingPage() {
 
                 <div className="flex flex-col justify-between gap-3 border-t border-[var(--color-border-subtle)] pt-5 sm:flex-row">
                   <button type="button" onClick={goToPrevStep} className="ux-btn-secondary">
-                    Atras
+                    Atrás
                   </button>
                   <button
                     type="submit"
@@ -693,7 +779,7 @@ export function BookingPage() {
           {selectedService ? (
             <div className="mt-5 border-t border-[var(--color-border-subtle)] pt-5">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-[var(--color-text-secondary)]">Duracion</span>
+                <span className="text-[var(--color-text-secondary)]">Duración</span>
                 <span className="font-semibold text-[var(--color-text-primary)]">{selectedService.duration} min</span>
               </div>
               <div className="mt-3 flex items-center justify-between text-sm">
@@ -725,10 +811,10 @@ export function BookingPage() {
         <div className="ux-card p-6">
           <div className="flex items-center gap-2">
             <Clock3 size={18} className="text-[var(--color-accent)]" />
-            <p className="text-sm font-semibold text-[var(--color-text-primary)]">Politica simple</p>
+            <p className="text-sm font-semibold text-[var(--color-text-primary)]">Política simple</p>
           </div>
           <p className="mt-3 text-sm leading-6 text-[var(--color-text-secondary)]">
-            Reprogramacion o cancelacion sin costo hasta 24 horas antes del turno.
+            Reprogramación o cancelación sin costo hasta 24 horas antes del turno.
           </p>
         </div>
       </aside>

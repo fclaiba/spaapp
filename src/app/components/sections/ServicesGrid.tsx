@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { ArrowRight, Clock3, WalletCards } from "lucide-react";
+import { motion } from "motion/react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 import { serviceCategories, services } from "../../data/spa";
 import { useModal } from "../modals/ModalContext";
@@ -19,16 +18,7 @@ const categoryImages: Record<string, string> = {
 };
 
 export function ServicesGridSection() {
-  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const { openService } = useModal();
-
-  const filteredServices = useMemo(
-    () =>
-      expandedCategory
-        ? services.filter((s) => s.categoryId === expandedCategory)
-        : [],
-    [expandedCategory],
-  );
+  const { openCategory } = useModal();
 
   const bentoCategories = serviceCategories.slice(0, 4);
   const extraCategories = serviceCategories.slice(4);
@@ -60,27 +50,28 @@ export function ServicesGridSection() {
             return (
               <motion.div
                 key={cat.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Ver servicios de ${cat.label.split("(")[0].trim()}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`group relative cursor-pointer overflow-hidden rounded-2xl ${
+                className={`group relative cursor-pointer overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                   isWide ? "md:col-span-8" : "md:col-span-4"
                 }`}
                 style={{ minHeight: 340 }}
-                onClick={() =>
-                  setExpandedCategory(
-                    expandedCategory === cat.id ? null : cat.id,
-                  )
-                }
+                onClick={() => openCategory(cat)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCategory(cat); } }}
               >
+                <span className="sr-only" role="img" aria-label={`Imagen de ${cat.label.split("(")[0].trim()}`} />
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:scale-105 group-hover:grayscale-0"
                   style={{
                     backgroundImage: `url('${categoryImages[cat.id] ?? ""}')`,
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-[var(--color-background)]/40 to-transparent" />
                 <div className="relative flex h-full min-h-[340px] flex-col justify-end p-6 sm:p-8">
                   <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-primary)]">
                     {topService?.badge ?? `${services.filter((s) => s.categoryId === cat.id).length} servicios`}
@@ -104,25 +95,26 @@ export function ServicesGridSection() {
             return (
               <motion.div
                 key={cat.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Ver servicios de ${cat.label.split("(")[0].trim()}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: (bentoCategories.length + i) * 0.1 }}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl md:col-span-6"
+                className="group relative cursor-pointer overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] md:col-span-6"
                 style={{ minHeight: 300 }}
-                onClick={() =>
-                  setExpandedCategory(
-                    expandedCategory === cat.id ? null : cat.id,
-                  )
-                }
+                onClick={() => openCategory(cat)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCategory(cat); } }}
               >
+                <span className="sr-only" role="img" aria-label={`Imagen de ${cat.label.split("(")[0].trim()}`} />
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-all duration-700 grayscale group-hover:scale-105 group-hover:grayscale-0"
                   style={{
                     backgroundImage: `url('${categoryImages[cat.id] ?? ""}')`,
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-[var(--color-background)]/40 to-transparent" />
                 <div className="relative flex h-full min-h-[300px] flex-col justify-end p-6 sm:p-8">
                   <span className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--color-primary)]">
                     {topService?.badge ?? `${services.filter((s) => s.categoryId === cat.id).length} servicios`}
@@ -138,94 +130,6 @@ export function ServicesGridSection() {
             );
           })}
         </div>
-
-        <AnimatePresence>
-          {expandedCategory && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4 }}
-              className="overflow-hidden"
-            >
-              <div className="mt-8 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3
-                    className="text-2xl text-[var(--color-text-primary)]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {serviceCategories.find((c) => c.id === expandedCategory)?.label}
-                  </h3>
-                  <button
-                    onClick={() => setExpandedCategory(null)}
-                    className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-primary)]"
-                  >
-                    Cerrar
-                  </button>
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-2">
-                  {filteredServices.map((service, index) => (
-                    <motion.article
-                      key={service.id}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="cursor-pointer rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-6 transition-colors hover:border-[var(--color-primary)]/30"
-                      onClick={() => openService(service, expandedCategory)}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <h4
-                            className="text-lg text-[var(--color-text-primary)]"
-                            style={{ fontFamily: "var(--font-display)" }}
-                          >
-                            {service.name}
-                          </h4>
-                          <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                            {service.summary}
-                          </p>
-                        </div>
-                        {service.badge && (
-                          <span className="ux-badge shrink-0">{service.badge}</span>
-                        )}
-                      </div>
-
-                      <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-tertiary)]">
-                        <span className="flex items-center gap-1.5">
-                          <Clock3 size={14} className="text-[var(--color-primary)]" />
-                          {service.duration} min
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <WalletCards size={14} className="text-[var(--color-primary)]" />
-                          ${service.price}
-                        </span>
-                      </div>
-
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {service.outcomes.map((o) => (
-                          <span
-                            key={o}
-                            className="rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface-subtle)] px-3 py-1 text-xs text-[var(--color-text-secondary)]"
-                          >
-                            {o}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="mt-5 border-t border-[var(--color-border-subtle)] pt-4">
-                        <span className="inline-flex items-center gap-2 text-sm text-[var(--color-primary)] transition-colors hover:text-[var(--color-accent)]">
-                          Ver detalle y reservar
-                          <ArrowRight size={14} />
-                        </span>
-                      </div>
-                    </motion.article>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         <div className="mt-10 text-center">
           <Link

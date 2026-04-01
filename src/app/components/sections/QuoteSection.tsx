@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 export function QuoteSection() {
   return (
-    <section className="bg-[#0e0e0e] py-20 sm:py-28 lg:py-36">
+    <section className="bg-[var(--color-surface-lowest)] py-20 sm:py-28 lg:py-36">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

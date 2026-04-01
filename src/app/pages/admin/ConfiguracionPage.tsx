@@ -8,7 +8,7 @@ import { useUpdateSettings, useSpaSnapshot } from "../../lib/spaStore";
 
 const tabs = [
   { id: "negocio", label: "Negocio", icon: Building2 },
-  { id: "operacion", label: "Operacion", icon: Settings2 },
+  { id: "operacion", label: "Operación", icon: Settings2 },
   { id: "notificaciones", label: "Notificaciones", icon: Bell },
   { id: "seguridad", label: "Seguridad", icon: ShieldCheck },
 ] as const;
@@ -28,9 +28,9 @@ export function ConfiguracionPage() {
   const handleSave = async () => {
     try {
       await updateSettings(formState);
-      toast.success("Configuracion guardada.");
+      toast.success("Configuración guardada.");
     } catch {
-      toast.error("No se pudo guardar la configuracion.");
+      toast.error("No se pudo guardar la configuración.");
     }
   };
 
@@ -44,7 +44,7 @@ export function ConfiguracionPage() {
       >
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <span className="ux-overline">Configuracion sin ruido</span>
+            <span className="ux-overline">Configuración sin ruido</span>
             <h2 className="ux-h2 mt-3">Se eliminan subpantallas ornamentales y quedan solo ajustes con impacto real.</h2>
           </div>
           <button type="button" onClick={handleSave} className="ux-btn-primary w-fit">
@@ -56,11 +56,14 @@ export function ConfiguracionPage() {
 
       <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
         <aside className="ux-card p-4">
-          <div className="space-y-2">
+          <div className="space-y-2" role="tablist" aria-label="Secciones de configuración">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                aria-controls={`panel-${tab.id}`}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold ${
                   activeTab === tab.id
@@ -79,7 +82,7 @@ export function ConfiguracionPage() {
           {activeTab === "negocio" ? (
             <div className="ux-card grid gap-4 p-6 lg:grid-cols-2">
               <div className="lg:col-span-2">
-                <p className="ux-overline">Informacion publica</p>
+                <p className="ux-overline">Información pública</p>
                 <h3 className="mt-3 text-xl font-semibold text-[var(--color-text-primary)]">Lo que el usuario ve y entiende del negocio.</h3>
               </div>
               <input
@@ -87,30 +90,35 @@ export function ConfiguracionPage() {
                 onChange={(event) => setFormState((current) => ({ ...current, businessName: event.target.value }))}
                 className="ux-input"
                 placeholder="Nombre comercial"
+                aria-label="Nombre comercial"
               />
               <input
                 value={formState.phone}
                 onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
                 className="ux-input"
-                placeholder="Telefono"
+                placeholder="Teléfono"
+                aria-label="Teléfono"
               />
               <input
                 value={formState.email}
                 onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
                 className="ux-input"
                 placeholder="Email"
+                aria-label="Email"
               />
               <input
                 value={formState.address}
                 onChange={(event) => setFormState((current) => ({ ...current, address: event.target.value }))}
                 className="ux-input"
-                placeholder="Direccion"
+                placeholder="Dirección"
+                aria-label="Dirección"
               />
               <textarea
                 value={formState.headline}
                 onChange={(event) => setFormState((current) => ({ ...current, headline: event.target.value }))}
                 className="ux-input min-h-28 resize-none lg:col-span-2"
                 placeholder="Mensaje principal"
+                aria-label="Mensaje principal"
               />
             </div>
           ) : null}
@@ -120,7 +128,7 @@ export function ConfiguracionPage() {
               <p className="ux-overline">Reglas de reserva</p>
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-[24px] bg-[var(--color-surface-subtle)] p-5">
-                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Antelacion minima</p>
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Antelación mínima</p>
                   <input
                     type="number"
                     min={1}
@@ -132,10 +140,11 @@ export function ConfiguracionPage() {
                       }))
                     }
                     className="ux-input mt-3"
+                    aria-label="Antelación mínima (horas)"
                   />
                 </div>
                 <div className="rounded-[24px] bg-[var(--color-surface-subtle)] p-5">
-                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Ventana de cancelacion</p>
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Ventana de cancelación</p>
                   <input
                     type="number"
                     min={1}
@@ -147,12 +156,13 @@ export function ConfiguracionPage() {
                       }))
                     }
                     className="ux-input mt-3"
+                    aria-label="Ventana de cancelación (horas)"
                   />
                 </div>
               </div>
 
               <div className="rounded-[24px] border border-[var(--color-border-subtle)] p-5">
-                <p className="text-sm font-semibold text-[var(--color-text-primary)]">Catalogo activo</p>
+                <p className="text-sm font-semibold text-[var(--color-text-primary)]">Catálogo activo</p>
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
                   {services.map((service) => (
                     <div key={service.id} className="rounded-2xl bg-[var(--color-surface-subtle)] px-4 py-3">
@@ -173,13 +183,16 @@ export function ConfiguracionPage() {
               <div className="rounded-[24px] border border-[var(--color-border-subtle)] p-5">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-sm font-semibold text-[var(--color-text-primary)]">Recordatorios automaticos</p>
+                    <p className="text-sm font-semibold text-[var(--color-text-primary)]">Recordatorios automáticos</p>
                     <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
                       Mantiene al equipo y al cliente alineados sobre la reserva creada.
                     </p>
                   </div>
                   <button
                     type="button"
+                    role="switch"
+                    aria-checked={formState.reminderEnabled}
+                    aria-label="Recordatorios automáticos"
                     onClick={() =>
                       setFormState((current) => ({
                         ...current,
@@ -206,7 +219,7 @@ export function ConfiguracionPage() {
               <p className="ux-overline">Criterio de confianza</p>
               <div className="grid gap-4">
                 <div className="rounded-[24px] bg-[var(--color-surface-subtle)] p-5 text-sm leading-6 text-[var(--color-text-secondary)]">
-                  El rediseño elimina confirmaciones falsas, recursos externos fragiles y puntos donde la interfaz prometia mas de lo que el sistema hacia.
+                  El rediseño elimina confirmaciones falsas, recursos externos frágiles y puntos donde la interfaz prometía más de lo que el sistema hacía.
                 </div>
                 <div className="rounded-[24px] bg-[var(--color-surface-subtle)] p-5 text-sm leading-6 text-[var(--color-text-secondary)]">
                   La cuenta administrativa se representa sin avatares remotos y con foco en permisos y estado del sistema.

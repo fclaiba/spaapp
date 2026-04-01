@@ -21,6 +21,9 @@
   --color-border-medium: rgba(77, 70, 53, 0.6);
   --color-focus: rgba(212, 175, 55, 0.35);
 
+  --color-primary-foreground: #554300;
+  --color-nav-muted: #4D4635;
+
   --font-display: "Cormorant Garamond", serif;
   --font-headline: "Noto Serif", serif;
   --font-body: "Inter", sans-serif;
@@ -35,13 +38,13 @@
     --popover: var(--color-surface);
     --popover-foreground: var(--color-text-primary);
     --primary: var(--color-primary);
-    --primary-foreground: #554300;
+    --primary-foreground: var(--color-primary-foreground);
     --secondary: var(--color-surface-subtle);
     --secondary-foreground: var(--color-text-primary);
     --muted: var(--color-surface-subtle);
     --muted-foreground: var(--color-text-secondary);
     --accent: var(--color-accent);
-    --accent-foreground: #554300;
+    --accent-foreground: var(--color-primary-foreground);
     --destructive: var(--color-danger);
     --destructive-foreground: #690005;
     --border: var(--color-border-subtle);
@@ -138,9 +141,9 @@
   .ux-btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-lg tracking-tight transition-all duration-300 outline-none;
     font-family: var(--font-display);
-    background: linear-gradient(135deg, #d4af37 0%, #f2ca50 50%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
     background-size: 200% 200%;
-    color: #554300;
+    color: var(--color-primary-foreground);
     box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
   }
 
@@ -198,7 +201,7 @@
   }
 
   .liquid-gold-gradient {
-    background: linear-gradient(135deg, #d4af37 0%, #f2ca50 50%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
     background-size: 200% 200%;
   }
 

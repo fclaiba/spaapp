@@ -13,6 +13,7 @@ import { DashboardPage } from "./pages/admin/DashboardPage";
 import { CitasPage } from "./pages/admin/CitasPage";
 import { ClientesPage } from "./pages/admin/ClientesPage";
 import { ConfiguracionPage } from "./pages/admin/ConfiguracionPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      { path: "*", Component: NotFoundPage },
     ],
   },
 ]);
