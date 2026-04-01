@@ -13,7 +13,6 @@ export function BookingLayout() {
             >
               MEDALLO SPA
             </p>
-            <p className="ux-caption">Aesthetics & IV Vitamins</p>
           </div>
           <Link to="/" className="ux-btn-secondary">
             <ArrowLeft size={16} />

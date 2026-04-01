@@ -35,7 +35,7 @@ export function Footer() {
           aria-label="Medallo Spa — Inicio"
         >
           <img
-            src="/logo.svg"
+            src="/LogotipoPNG.png"
             alt="Medallo Spa"
             className="h-20 w-auto mix-blend-multiply sm:h-24"
           />

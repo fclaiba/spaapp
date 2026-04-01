@@ -7,11 +7,11 @@ export function HeroSection() {
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <img
         src="/hero.jpeg"
-        alt="Medallo Spa — Aesthetics & IV Vitamins"
+        alt="Medallo Spa"
         className="absolute inset-0 h-full w-full object-cover object-center"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/40 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#fff7ee]/86 via-[#fff7ee]/62 to-[#fff7ee]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
         <motion.div
@@ -20,9 +20,7 @@ export function HeroSection() {
           transition={{ duration: 0.8 }}
           className="space-y-8"
         >
-          <p className="ux-overline">
-            MEDALLO SPA &mdash; Aesthetics & IV Vitamins
-          </p>
+          <p className="ux-overline">MEDALLO SPA</p>
 
           <h1
             className="ux-h1 mx-auto max-w-4xl"
@@ -35,7 +33,7 @@ export function HeroSection() {
           </h1>
 
           <p className="mx-auto max-w-xl text-lg leading-relaxed text-[var(--color-text-secondary)]">
-            Aesthetics & IV Vitamins — Nueva York, Estados Unidos
+            Nueva York, Estados Unidos
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

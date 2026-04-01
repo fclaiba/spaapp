@@ -43,7 +43,7 @@ export function AdminLayout() {
           >
             <div className="flex items-center gap-3 border-b border-[var(--color-border-subtle)] pb-5">
               <img
-                src="/logo.svg"
+                src="/LogotipoPNG.png"
                 alt="Medallo Spa"
                 className="h-10 w-auto mix-blend-multiply"
               />

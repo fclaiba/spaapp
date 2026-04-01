@@ -37,7 +37,7 @@ export function Header() {
             aria-label="Medallo Spa — Inicio"
           >
             <img
-              src="/logo.svg"
+              src="/LogotipoPNG.png"
               alt="Medallo Spa"
               className="h-12 w-auto mix-blend-multiply sm:h-14"
             />
@@ -67,9 +67,9 @@ export function Header() {
               className="rounded-full px-6 py-2.5 text-sm tracking-tight transition-all duration-300 hover:scale-[0.97]"
               style={{
                 fontFamily: "var(--font-display)",
-                background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%)",
+                background: "var(--color-primary)",
                 color: "var(--color-primary-foreground)",
-                boxShadow: "0 4px 16px rgba(184,150,12,0.25)",
+                boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
               }}
             >
               Reservar
