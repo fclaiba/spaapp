@@ -10,15 +10,15 @@ const ITEMS_PER_PAGE = 4;
 
 const categoryImages: Record<string, string> = {
   sueroterapia:
-    "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1763310225009-50214e3c99d9?w=1200&q=80&auto=format&fit=crop",
   faciales:
     "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=80&auto=format&fit=crop",
   esteticos:
-    "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80&auto=format&fit=crop",
   corporales:
     "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80&auto=format&fit=crop",
   laser:
-    "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1746806942799-b4db209e9a6b?w=1200&q=80&auto=format&fit=crop",
 };
 
 export function CategoryServicesModal() {
@@ -60,7 +60,7 @@ export function CategoryServicesModal() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('${image}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-surface)] via-[var(--color-surface)]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-surface)] via-[var(--color-surface)]/60 to-[var(--color-surface)]/10" />
 
           <div className="absolute bottom-5 left-6 right-10">
             <span className="mb-1.5 block text-[10px] uppercase tracking-[0.35em] text-[var(--color-primary)]">

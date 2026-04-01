@@ -6,14 +6,12 @@ export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <img
-        src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200&q=80&auto=format&fit=crop"
-        srcSet="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=640&q=80&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1024&q=80&auto=format&fit=crop 1024w, https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=80&auto=format&fit=crop 1920w"
-        sizes="100vw"
-        alt="Spa de lujo con ambiente relajante"
+        src="/hero.jpeg"
+        alt="Medallo Spa — Aesthetics & IV Vitamins"
         className="absolute inset-0 h-full w-full object-cover object-center"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/20 to-[var(--color-background)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/40 to-white" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-32 pb-24 text-center sm:px-6">
         <motion.div
@@ -37,8 +35,7 @@ export function HeroSection() {
           </h1>
 
           <p className="mx-auto max-w-xl text-lg leading-relaxed text-[var(--color-text-secondary)]">
-            Encuentra el tratamiento correcto, entiende el resultado esperado y
-            reserva sin fricción.
+            Aesthetics & IV Vitamins — Nueva York, Estados Unidos
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
+import { WhatsAppButton } from "../components/ui/WhatsAppButton";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -14,6 +15,7 @@ export function RootLayout() {
     <div className="ux-page overflow-x-hidden font-[var(--font-body)]">
       <ScrollToTop />
       <Outlet />
+      <WhatsAppButton />
     </div>
   );
 }

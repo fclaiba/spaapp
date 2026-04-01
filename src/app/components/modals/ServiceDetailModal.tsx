@@ -34,7 +34,7 @@ export function ServiceDetailModal() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('${image}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-surface)] via-[var(--color-surface)]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-surface)] via-[var(--color-surface)]/60 to-[var(--color-surface)]/10" />
           <div className="absolute bottom-4 left-6 right-6">
             {service.badge && (
               <span className="mb-2 inline-block rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-accent-soft)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">

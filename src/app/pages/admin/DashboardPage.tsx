@@ -5,7 +5,7 @@ import { KPICard } from "../../components/dashboard/KPICard";
 import { RecentClientsTable } from "../../components/dashboard/RecentClientsTable";
 import { RevenueChart } from "../../components/dashboard/RevenueChart";
 import { SourceChart } from "../../components/dashboard/SourceChart";
-import { Skeleton } from "../../components/ui/Skeleton";
+import { Skeleton } from "../../components/ui/skeleton";
 import { getSourceDistribution, getWeeklyOverview, useSpaSnapshot } from "../../lib/spaStore";
 
 const isCurrentMonth = (isoDate: string) => {

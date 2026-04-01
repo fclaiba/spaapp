@@ -1,11 +1,11 @@
 {
   "name": "Medallo Spa — Aesthetics & IV Vitamins",
   "short_name": "Medallo Spa",
-  "description": "Encuentra el tratamiento correcto, entiende el resultado esperado y reserva sin fricción.",
+  "description": "Estética avanzada & Sueroterapia IV — Medallo Spa, Nueva York",
   "start_url": "/",
   "display": "minimal-ui",
-  "background_color": "#FAFAF7",
-  "theme_color": "#FAFAF7",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "orientation": "any",
   "icons": [
     {
